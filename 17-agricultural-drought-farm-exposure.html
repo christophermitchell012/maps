@@ -87,7 +87,13 @@
     <div class="health-row"><span>CDC/ATSDR SVI</span><span id="hSvi" class="pill loading">Loading</span></div>
   </div>
 
-  <div class="card">
+    <div class="card">
+    <b>Region</b>
+    <div class="region-row"><button class="region-btn active" data-region="All">All</button><button class="region-btn" data-region="Northeast">Northeast</button><button class="region-btn" data-region="Midwest">Midwest</button><button class="region-btn" data-region="South">South</button><button class="region-btn" data-region="West">West</button></div>
+    <div class="small boundary-note">Census Bureau four-region grouping. Region selection filters markers and ranking.</div>
+  </div>
+
+<div class="card">
     <b>Layers</b>
     <label class="toggle"><input id="toggleBoundary" type="checkbox" checked> County boundary outlines</label>
     <label class="toggle"><input id="toggleDrought" type="checkbox" checked> Current county drought</label>
