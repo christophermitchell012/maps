@@ -146,6 +146,7 @@
     <a href="https://droughtmonitor.unl.edu/DmData/DataDownload/WebServiceInfo.aspx" target="_blank" rel="noopener">U.S. Drought Monitor REST documentation</a><br>
     <a href="https://www.nass.usda.gov/Publications/AgCensus/2022/Online_Resources/Ag_Census_Web_Maps/Data_download/" target="_blank" rel="noopener">USDA NASS 2022 Census of Agriculture county data</a><br>
     <a href="https://www.atsdr.cdc.gov/place-health/php/svi/svi-data-documentation-download.html" target="_blank" rel="noopener">CDC/ATSDR SVI data download</a><br>
+    <a href="data/cdc-svi-2022-county.json">Saved CDC/ATSDR SVI 2022 county snapshot used by this map</a><br>
     <a href="https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.2025.html" target="_blank" rel="noopener">U.S. Census Bureau 2025 Gazetteer files</a>
   </div>
 
@@ -172,11 +173,11 @@
   });
 
   // Production build contract:
-  // USDA and CDC snapshots should be embedded by the publisher after downloading
-  // authoritative first-party files. The public browser must not need proprietary GIS
-  // or API keys. These empty objects deliberately degrade independently in preview.
+  // USDA may be embedded by the publisher. CDC SVI is stored as a versioned static
+  // county snapshot in this repository so the browser does not depend on a live GIS API.
   const USDA_AG_EXPOSURE = Object.freeze({});
-  const CDC_SVI = Object.freeze({});
+  const CDC_SVI = {};
+  const CDC_SVI_SNAPSHOT_URL = "data/cdc-svi-2022-county.json";
 
   const map = L.map("map", {preferCanvas:true}).setView([38.2,-97],4);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{
@@ -380,6 +381,29 @@
     }
   }
 
+  async function loadSavedSvi(run){
+    setHealth("hSvi","Loading","loading","Loading saved CDC/ATSDR SVI 2022 county snapshot");
+    try{
+      const res=await fetch(CDC_SVI_SNAPSHOT_URL,{cache:"force-cache"});
+      if(!res.ok) throw new Error("HTTP "+res.status);
+      const json=await res.json();
+      if(run!==state.run) return false;
+      const rows=json?.counties && typeof json.counties==="object" ? json.counties : {};
+      for(const [fips,value] of Object.entries(rows)){
+        const k=normalizeFips(fips), v=Number(value);
+        if(k && Number.isFinite(v) && v>=0 && v<=1) CDC_SVI[k]=v;
+      }
+      if(!Object.keys(CDC_SVI).length) throw new Error("saved snapshot contained no usable county values");
+      setHealth("hSvi","Saved","cached",`Saved CDC/ATSDR SVI 2022 county snapshot • ${Object.keys(CDC_SVI).length.toLocaleString()} counties`);
+      return true;
+    }catch(e){
+      if(run!==state.run) return false;
+      setHealth("hSvi","Unavailable","error",String(e));
+      diag("CDC SVI saved snapshot: "+e);
+      return false;
+    }
+  }
+
   function initializeSnapshotHealth(){
     if(Object.keys(USDA_AG_EXPOSURE).length){
       setHealth("hUsda","Cached","cached","Embedded USDA 2022 Census of Agriculture snapshot");
@@ -388,10 +412,7 @@
       diag("USDA exposure snapshot not embedded in preview; layer degrades independently.");
     }
     if(Object.keys(CDC_SVI).length){
-      setHealth("hSvi","Cached","cached","Embedded CDC/ATSDR SVI 2022 county snapshot");
-    }else{
-      setHealth("hSvi","Unavailable","error","Preview does not embed the CDC SVI snapshot yet; score renormalizes.");
-      diag("CDC SVI snapshot not embedded in preview; score renormalizes available weights.");
+      setHealth("hSvi","Saved","cached","Saved CDC/ATSDR SVI 2022 county snapshot");
     }
   }
 
@@ -499,10 +520,10 @@
     setHealth("hBoundaries","Loading","loading");
     initializeSnapshotHealth();
 
-    const [c,b,d]=await Promise.all([loadCentroids(run),loadBoundaries(run),loadDrought(run)]);
+    const [c,b,d,s]=await Promise.all([loadCentroids(run),loadBoundaries(run),loadDrought(run),loadSavedSvi(run)]);
     if(run!==state.run){ state.refreshing=false; return; }
     render();
-    $("updated").textContent="Updated "+new Date().toLocaleString()+" • centroids="+(c?"live":"unavailable")+" • boundaries="+(b?"live":"unavailable")+" • drought="+(d?"live":"unavailable");
+    $("updated").textContent="Updated "+new Date().toLocaleString()+" • centroids="+(c?"live":"unavailable")+" • boundaries="+(b?"live":"unavailable")+" • drought="+(d?"live":"unavailable")+" • SVI="+(s?"saved":"unavailable");
     state.refreshing=false;
   }
 
