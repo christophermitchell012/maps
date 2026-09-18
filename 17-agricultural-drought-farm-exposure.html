@@ -39,6 +39,7 @@
     .metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
     .metric{padding:8px;background:#11171b;border:1px solid var(--line);border-radius:7px}
     .metric b{display:block;font-size:17px}
+    .region-row{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}.region-btn{font-size:11px;padding:4px 7px}.region-btn.active{border-color:#62a8ff;background:#21344a}.boundary-note{margin-top:6px}
     .legend-row{display:flex;align-items:center;gap:7px;margin:5px 0;font-size:11.5px}
     .sw{width:18px;height:10px;border-radius:2px;display:inline-block}
     .formula{padding:8px;background:#11171b;border:1px solid var(--line);border-radius:7px;font:11px/1.5 ui-monospace,SFMono-Regular,Consolas,monospace}
@@ -81,12 +82,14 @@
     <b>Source health</b>
     <div class="health-row"><span>U.S. Drought Monitor REST</span><span id="hDrought" class="pill loading">Loading</span></div>
     <div class="health-row"><span>Census Gazetteer coordinates</span><span id="hCentroids" class="pill loading">Loading</span></div>
+    <div class="health-row"><span>Census county boundaries</span><span id="hBoundaries" class="pill loading">Loading</span></div>
     <div class="health-row"><span>USDA Ag Census exposure</span><span id="hUsda" class="pill loading">Loading</span></div>
     <div class="health-row"><span>CDC/ATSDR SVI</span><span id="hSvi" class="pill loading">Loading</span></div>
   </div>
 
   <div class="card">
     <b>Layers</b>
+    <label class="toggle"><input id="toggleBoundary" type="checkbox" checked> County boundary outlines</label>
     <label class="toggle"><input id="toggleDrought" type="checkbox" checked> Current county drought</label>
     <label class="toggle"><input id="toggleAg" type="checkbox" checked> Agricultural exposure</label>
     <label class="toggle"><input id="toggleScore" type="checkbox" checked> Combined screening score</label>
@@ -148,6 +151,13 @@
   const STATES = "AL,AK,AZ,AR,CA,CO,CT,DC,DE,FL,GA,HI,ID,IL,IN,IA,KS,KY,LA,ME,MD,MA,MI,MN,MS,MO,MT,NE,NV,NH,NJ,NM,NY,NC,ND,OH,OK,OR,PA,RI,SC,SD,TN,TX,UT,VT,VA,WA,WV,WI,WY";
   const USDM_BASE = "https://usdmdataservices.unl.edu/api/CountyStatistics/GetDroughtSeverityStatisticsByAreaPercent";
   const GAZ_ZIP = "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2025_Gazetteer/2025_Gaz_counties_national.zip";
+  const COUNTY_KML_ZIP = "https://www2.census.gov/geo/tiger/GENZ2025/kml/cb_2025_us_county_5m.zip";
+  const REGIONS = Object.freeze({
+    Northeast:new Set("CT,ME,MA,NH,RI,VT,NJ,NY,PA".split(",")),
+    Midwest:new Set("IN,IL,MI,OH,WI,IA,KS,MN,MO,NE,ND,SD".split(",")),
+    South:new Set("DE,DC,FL,GA,MD,NC,SC,VA,WV,AL,KY,MS,TN,AR,LA,OK,TX".split(",")),
+    West:new Set("AZ,CO,ID,MT,NV,NM,UT,WY,AK,CA,HI,OR,WA".split(","))
+  });
 
   // Production build contract:
   // USDA and CDC snapshots should be embedded by the publisher after downloading
@@ -162,6 +172,7 @@
     attribution:'&copy; OpenStreetMap contributors'
   }).addTo(map);
 
+  const boundaryLayer = L.layerGroup().addTo(map);
   const droughtLayer = L.layerGroup().addTo(map);
   const agLayer = L.layerGroup().addTo(map);
   const scoreLayer = L.layerGroup().addTo(map);
@@ -174,7 +185,9 @@
     markers:new Map(),
     failures:[],
     visibleAtStart:!document.hidden,
-    refreshing:false
+    refreshing:false,
+    region:"All",
+    boundaryFeatures:[]
   };
 
   function diag(msg){
@@ -276,6 +289,31 @@
       return false;
     }
   }
+
+  async function loadBoundaries(run){
+    try{
+      const r=await fetchWithTimeout(COUNTY_KML_ZIP,{},12000);
+      const files=fflate.unzipSync(new Uint8Array(await r.arrayBuffer()));
+      const key=Object.keys(files).find(k=>/\.kml$/i.test(k));
+      if(!key) throw new Error("County KML not found in Census ZIP");
+      const xml=new DOMParser().parseFromString(new TextDecoder().decode(files[key]),"application/xml");
+      const features=[];
+      for(const p of xml.getElementsByTagName("Placemark")){
+        const data={}; for(const sd of p.getElementsByTagName("SimpleData")) data[sd.getAttribute("name")]=sd.textContent.trim();
+        const fips=String(data.STATEFP||"").padStart(2,"0")+String(data.COUNTYFP||"").padStart(3,"0"), polys=[];
+        for(const poly of p.getElementsByTagName("Polygon")){
+          const rings=[]; for(const ring of poly.getElementsByTagName("LinearRing")){
+            const coord=ring.getElementsByTagName("coordinates")[0]?.textContent.trim(); if(!coord) continue;
+            rings.push(coord.split(/\s+/).map(s=>{const a=s.split(",").map(Number);return [a[1],a[0]]}).filter(x=>Number.isFinite(x[0])&&Number.isFinite(x[1])));
+          } if(rings.length) polys.push(rings);
+        } if(/^\d{5}$/.test(fips)&&polys.length) features.push({fips,polys});
+      }
+      if(run!==state.run) return false; state.boundaryFeatures=features;
+      setHealth("hBoundaries","Live","live",features.length.toLocaleString()+" Census county geometries"); return true;
+    }catch(e){ if(run!==state.run) return false; state.boundaryFeatures=[]; setHealth("hBoundaries","Unavailable","error",String(e)); diag("Census boundaries: "+e); return false; }
+  }
+  function regionFor(abbr){ for(const [name,set] of Object.entries(REGIONS)) if(set.has(String(abbr||"").toUpperCase())) return name; return null; }
+  function regionMatch(abbr){ return state.region==="All" || regionFor(abbr)===state.region; }
 
   async function loadDrought(run){
     try{
@@ -419,7 +457,7 @@
   }
 
   function wireToggles(){
-    const pairs=[["toggleDrought",droughtLayer],["toggleAg",agLayer],["toggleScore",scoreLayer]];
+    const pairs=[["toggleBoundary",boundaryLayer],["toggleDrought",droughtLayer],["toggleAg",agLayer],["toggleScore",scoreLayer]];
     for(const [id,layer] of pairs){
       $(id).addEventListener("change",e=>{
         if(e.target.checked) layer.addTo(map); else map.removeLayer(layer);
@@ -428,6 +466,13 @@
         $(id).checked=map.hasLayer(layer);
       });
     }
+  }
+
+  function wireRegions(){
+    document.querySelectorAll(".region-btn").forEach(btn=>btn.addEventListener("click",()=>{
+      state.region=btn.dataset.region; document.querySelectorAll(".region-btn").forEach(x=>x.classList.toggle("active",x===btn)); render();
+      if(state.region==="All") map.setView([38.2,-97],4); else { const pts=[...state.counties.values()].filter(x=>regionMatch(x.state)).map(x=>[x.lat,x.lon]); if(pts.length) map.fitBounds(pts,{padding:[18,18],maxZoom:5}); }
+    }));
   }
 
   async function refresh(){
@@ -439,17 +484,19 @@
     $("updated").textContent="Loading primary sources…";
     setHealth("hDrought","Loading","loading");
     setHealth("hCentroids","Loading","loading");
+    setHealth("hBoundaries","Loading","loading");
     initializeSnapshotHealth();
 
-    const [c,d]=await Promise.all([loadCentroids(run),loadDrought(run)]);
+    const [c,b,d]=await Promise.all([loadCentroids(run),loadBoundaries(run),loadDrought(run)]);
     if(run!==state.run){ state.refreshing=false; return; }
     render();
-    $("updated").textContent=`Updated ${new Date().toLocaleString()} • centroids=${c?"live":"unavailable"} • drought=${d?"live":"unavailable"}`;
+    $("updated").textContent="Updated "+new Date().toLocaleString()+" • centroids="+(c?"live":"unavailable")+" • boundaries="+(b?"live":"unavailable")+" • drought="+(d?"live":"unavailable");
     state.refreshing=false;
   }
 
   $("refresh").addEventListener("click",refresh);
   wireToggles();
+  wireRegions();
 
   let resizeTimer=null;
   window.addEventListener("resize",()=>{
