@@ -1,8 +1,18 @@
-title: MitchellCo Maps
-description: Interactive public-data maps for weather, natural hazards, infrastructure, environment, and space weather.
+title: MitchellCo Interactive Data Maps
+description: Interactive public-data maps for weather, wildfire, earthquakes, drought, floods, infrastructure, environment, public risk, and space weather.
 url: https://christophermitchell012.github.io
 baseurl: /maps
 timezone: America/Chicago
 future: false
+
+collections:
+  maps:
+    output: true
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: null
 
 exclude: [README.md, LICENSE]
