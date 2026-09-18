@@ -1,11 +1,25 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>{{ site.url }}{{ site.baseurl }}/</loc></url>
-  {% assign html_files = site.static_files | where_exp: "file", "file.extname == '.html'" %}
-  {% for file in html_files %}
-  <url><loc>{{ site.url }}{{ site.baseurl }}{{ file.path }}</loc></url>
-  {% endfor %}
+  <url><loc>https://christophermitchell012.github.io/maps/</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/00-wildfire-watch.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/01-flash-flood-river-flood-risk.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/02-extreme-heat-health-risk.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/03-wildfire-smoke-exposure.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/04-hurricane-storm-surge-impact.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/05-breaking-news-geography.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/06-severe-storm-tornado-exposure.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/07-wildfire-evacuation-risk.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/08-drought-water-supply-stress.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/09-power-grid-stress-extreme-weather.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/10-drinking-water-quality-risk.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/11-internet-outage-watch.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/12-coastal-flooding-high-tide-risk.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/13-earthquake-impact.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/14-fema-disaster-declarations-community-impact.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/15-general-air-quality-health-risk.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/16-reservoir-water-shortage-monitor.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/17-agricultural-drought-farm-exposure.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/18-national-weather-alert-impact.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/19-aurora-geomagnetic-impact.html</loc></url>
+  <url><loc>https://christophermitchell012.github.io/maps/20-earthquake-shaking-impact.html</loc></url>
 </urlset>
