@@ -1,0 +1,9 @@
+{
+  "name": "MitchellCo Maps",
+  "short_name": "Maps",
+  "description": "Interactive public-data maps.",
+  "start_url": "/maps/",
+  "display": "browser",
+  "background_color": "#0b1115",
+  "theme_color": "#0b1115"
+}

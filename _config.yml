@@ -1,0 +1,8 @@
+title: MitchellCo Maps
+description: Interactive public-data maps for weather, natural hazards, infrastructure, environment, and space weather.
+url: https://christophermitchell012.github.io
+baseurl: /maps
+timezone: America/Chicago
+future: false
+
+exclude: [README.md, LICENSE]
