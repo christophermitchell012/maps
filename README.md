@@ -1,43 +1,56 @@
-# MitchellCo Maps
+# MitchellCo Interactive Data Maps
 
-Interactive, standalone HTML maps built from public data sources.
+Interactive, standalone public-data maps for weather, wildfire, earthquakes, drought, floods, infrastructure, environment, public risk, space weather, and current events.
 
-## Map collection
+## Published collection
 
-The repository contains 21 numbered maps, beginning with **00 WildfireWatch** and continuing through Map 20. Browse the complete collection from [index.html](index.html), which lists every map numerically and groups related maps by theme.
+Browse the collection at:
 
-- Fire and smoke
-- Weather and severe hazards
-- Water, flood and drought
-- Earthquakes and disasters
-- Infrastructure
-- Environment and agriculture
-- Space weather
-- News and current events
+https://christophermitchell012.github.io/maps/
 
-The primary wildfire map is [00-wildfire-watch.html](00-wildfire-watch.html).
+The repository currently contains the collection index plus Maps 00 through 20:
+
+- 00 WildfireWatch
+- 01 Flash Flood & River Flood Risk
+- 02 Extreme Heat Health Risk
+- 03 Wildfire Smoke Exposure
+- 04 Hurricane & Storm Surge Impact
+- 05 Breaking News Geography
+- 06 Severe Storm & Tornado Exposure
+- 07 Wildfire Evacuation Risk
+- 08 Drought & Water Supply Stress
+- 09 Power Grid Stress & Extreme Weather
+- 10 Drinking Water Quality Risk
+- 11 Internet Outage Watch
+- 12 Coastal Flooding & High Tide Risk
+- 13 Earthquake Impact
+- 14 FEMA Disaster Declarations & Community Impact
+- 15 General Air Quality Health Risk
+- 16 Reservoir Water Shortage Monitor
+- 17 Agricultural Drought & Farm Exposure
+- 18 National Weather Alert Impact
+- 19 Aurora & Geomagnetic Impact
+- 20 Earthquake Shaking Impact
+
+## Site and search files
+
+- `index.html` is the crawlable collection directory.
+- `sitemap.xml` contains the index and every published numbered map.
+- `robots.txt` points crawlers to the sitemap.
+- `_config.yml` defines GitHub Pages metadata and the `/maps` base URL.
+- `site.webmanifest` identifies the collection as MitchellCo Interactive Data Maps.
+- `404.html` returns visitors to the collection index.
+- `data/` contains saved public-data snapshots and supporting geographic data used by maps.
 
 ## Design goals
 
-- Browser-first, standalone HTML where practical
+- Browser-first standalone HTML where practical
 - Public data sources
-- No ArcGIS/Esri dependencies
 - No API keys, tokens, or account-based runtime authentication
-- Clear attribution and source links inside each map
+- Clear attribution and source links
+- Consistent GA4 analytics using `G-8SVEH8WD1R`
 - GitHub Pages friendly
-
-## Repository files
-
-- `index.html` searchable/crawlable map directory
-- `00-wildfire-watch.html` through `20-earthquake-shaking-impact.html` map applications
-- `robots.txt` and `sitemap.xml` for search-engine discovery
-- `_config.yml` for GitHub Pages/Jekyll metadata
-- `.gitignore` for local development artifacts
-- `LICENSE` for repository licensing
-
-## Publishing
-
-GitHub Pages can serve this repository directly from the `main` branch. The collection index provides normal HTML links to every map so search crawlers and visitors can discover the individual pages.
+- SEO metadata, canonical URLs, and crawlable internal links
 
 ## License
 
