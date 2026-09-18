@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MitchellCo Interactive Maps | Live Public Data Maps</title>
+<meta name="description" content="Explore MitchellCo interactive public-data maps for wildfire, weather, floods, drought, earthquakes, infrastructure, air quality, space weather and breaking news.">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://christophermitchell012.github.io/maps/">
+<meta name="theme-color" content="#0b1115">
+<style>
+:root{--bg:#0b1115;--panel:#121a20;--panel2:#172129;--line:#2b3943;--ink:#f4f8fa;--muted:#9eabb3;--accent:#72d5ff;--fire:#ff9b50;--weather:#72d5ff;--water:#65c8ff;--earth:#d8b56a;--infra:#ffd45d;--env:#78e6a0;--space:#b692ff;--news:#ff7187}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 70% 5%,#142330 0,transparent 30%),var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+a{color:inherit}.wrap{max-width:1500px;margin:auto;padding:32px}.hero{margin:10px 0 28px}.eyebrow{color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:12px}.hero h1{font-size:clamp(32px,5vw,60px);letter-spacing:-.045em;margin:7px 0 8px}.hero p{color:var(--muted);max-width:780px;font-size:17px}
+.grid{display:grid;grid-template-columns:minmax(360px,.82fr) minmax(520px,1.18fr);gap:28px;align-items:start}.panel{background:rgba(18,26,32,.86);border:1px solid var(--line);border-radius:18px;padding:20px}
+.panel h2{margin:0 0 5px;font-size:20px}.hint{color:var(--muted);margin:0 0 15px}
+.maplist{display:grid;gap:7px}.maprow{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;text-decoration:none;padding:9px 10px;border:1px solid transparent;border-radius:10px}.maprow:hover{background:var(--panel2);border-color:var(--line)}.num{font:700 12px ui-monospace,monospace;color:var(--muted)}.name{font-weight:700}.tag{font-size:11px;color:var(--muted)}
+.graph{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.group{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--panel2);position:relative}.group h3{margin:0 0 10px;font-size:15px}.group a{display:block;text-decoration:none;padding:5px 7px;border-radius:7px;color:#dfe8ed}.group a:hover{background:#21303a}.group a span{color:var(--muted);font:700 11px ui-monospace,monospace;margin-right:7px}
+.fire h3{color:var(--fire)}.weather h3{color:var(--weather)}.water h3{color:var(--water)}.earth h3{color:var(--earth)}.infra h3{color:var(--infra)}.env h3{color:var(--env)}.space h3{color:var(--space)}.news h3{color:var(--news)}
+.note{margin-top:14px;color:var(--muted);font-size:12px}.footer{color:var(--muted);padding:26px 2px;font-size:13px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.graph{grid-template-columns:1fr}.wrap{padding:20px}.tag{display:none}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"MitchellCo Interactive Maps","description":"Interactive public-data maps for hazards, weather, infrastructure, environment and space weather.","url":"https://christophermitchell012.github.io/maps/"}</script>
+</head>
+<body><main class="wrap">
+<section class="hero"><div class="eyebrow">MitchellCo Maps</div><h1>Public data, mapped.</h1><p>Interactive maps that turn public data into practical geographic views of hazards, weather, infrastructure, environmental conditions and current events. Select a map by number or explore related maps by theme.</p></section>
+<div class="grid">
+<section class="panel"><h2>All maps</h2><p class="hint">Numerical order</p><nav class="maplist" aria-label="All maps">
+<a class="maprow" href="00-wildfire-watch.html"><span class="num">00</span><span class="name">WildfireWatch</span><span class="tag">Fire</span></a>
+<a class="maprow" href="01-flash-flood-river-flood-risk.html"><span class="num">01</span><span class="name">Flash Flood & River Flood Risk</span><span class="tag">Water</span></a>
+<a class="maprow" href="02-extreme-heat-health-risk.html"><span class="num">02</span><span class="name">Extreme Heat Health Risk</span><span class="tag">Weather</span></a>
+<a class="maprow" href="03-wildfire-smoke-exposure.html"><span class="num">03</span><span class="name">Wildfire Smoke Exposure</span><span class="tag">Fire</span></a>
+<a class="maprow" href="04-hurricane-storm-surge-impact.html"><span class="num">04</span><span class="name">Hurricane & Storm Surge Impact</span><span class="tag">Weather</span></a>
+<a class="maprow" href="05-breaking-news-geography.html"><span class="num">05</span><span class="name">Breaking News Geography</span><span class="tag">News</span></a>
+<a class="maprow" href="06-severe-storm-tornado-exposure.html"><span class="num">06</span><span class="name">Severe Storm & Tornado Exposure</span><span class="tag">Weather</span></a>
+<a class="maprow" href="07-wildfire-evacuation-risk.html"><span class="num">07</span><span class="name">Wildfire Evacuation Risk</span><span class="tag">Fire</span></a>
+<a class="maprow" href="08-drought-water-supply-stress.html"><span class="num">08</span><span class="name">Drought & Water Supply Stress</span><span class="tag">Water</span></a>
+<a class="maprow" href="09-power-grid-stress-extreme-weather.html"><span class="num">09</span><span class="name">Power Grid Stress & Extreme Weather</span><span class="tag">Infrastructure</span></a>
+<a class="maprow" href="10-drinking-water-quality-risk.html"><span class="num">10</span><span class="name">Drinking Water Quality Risk</span><span class="tag">Water</span></a>
+<a class="maprow" href="11-internet-outage-watch.html"><span class="num">11</span><span class="name">Internet Outage Watch</span><span class="tag">Infrastructure</span></a>
+<a class="maprow" href="12-coastal-flooding-high-tide-risk.html"><span class="num">12</span><span class="name">Coastal Flooding & High Tide Risk</span><span class="tag">Water</span></a>
+<a class="maprow" href="13-earthquake-impact.html"><span class="num">13</span><span class="name">Earthquake Impact</span><span class="tag">Earth</span></a>
+<a class="maprow" href="14-fema-disaster-declarations-community-impact.html"><span class="num">14</span><span class="name">FEMA Disaster Declarations</span><span class="tag">Hazards</span></a>
+<a class="maprow" href="15-general-air-quality-health-risk.html"><span class="num">15</span><span class="name">Air Quality Health Risk</span><span class="tag">Environment</span></a>
+<a class="maprow" href="16-reservoir-water-shortage-monitor.html"><span class="num">16</span><span class="name">Reservoir Water Shortage Monitor</span><span class="tag">Water</span></a>
+<a class="maprow" href="17-agricultural-drought-farm-exposure.html"><span class="num">17</span><span class="name">Agricultural Drought & Farm Exposure</span><span class="tag">Environment</span></a>
+<a class="maprow" href="18-national-weather-alert-impact.html"><span class="num">18</span><span class="name">National Weather Alert Impact</span><span class="tag">Weather</span></a>
+<a class="maprow" href="19-aurora-geomagnetic-impact.html"><span class="num">19</span><span class="name">Aurora & Geomagnetic Impact</span><span class="tag">Space</span></a>
+<a class="maprow" href="20-earthquake-shaking-impact.html"><span class="num">20</span><span class="name">Earthquake Shaking Impact</span><span class="tag">Earth</span></a>
+</nav></section>
+<section class="panel"><h2>Explore by theme</h2><p class="hint">Related maps grouped as a visual topic graph</p><div class="graph">
+<div class="group fire"><h3>Fire & smoke</h3><a href="00-wildfire-watch.html"><span>00</span>WildfireWatch</a><a href="03-wildfire-smoke-exposure.html"><span>03</span>Wildfire Smoke Exposure</a><a href="07-wildfire-evacuation-risk.html"><span>07</span>Wildfire Evacuation Risk</a></div>
+<div class="group weather"><h3>Weather & severe hazards</h3><a href="02-extreme-heat-health-risk.html"><span>02</span>Extreme Heat</a><a href="04-hurricane-storm-surge-impact.html"><span>04</span>Hurricanes & Storm Surge</a><a href="06-severe-storm-tornado-exposure.html"><span>06</span>Severe Storms & Tornadoes</a><a href="18-national-weather-alert-impact.html"><span>18</span>National Weather Alerts</a></div>
+<div class="group water"><h3>Water, flood & drought</h3><a href="01-flash-flood-river-flood-risk.html"><span>01</span>River & Flash Flooding</a><a href="08-drought-water-supply-stress.html"><span>08</span>Drought & Water Supply</a><a href="10-drinking-water-quality-risk.html"><span>10</span>Drinking Water Quality</a><a href="12-coastal-flooding-high-tide-risk.html"><span>12</span>Coastal Flooding</a><a href="16-reservoir-water-shortage-monitor.html"><span>16</span>Reservoir Shortage</a></div>
+<div class="group earth"><h3>Earth & disasters</h3><a href="13-earthquake-impact.html"><span>13</span>Earthquake Impact</a><a href="14-fema-disaster-declarations-community-impact.html"><span>14</span>Disaster Declarations</a><a href="20-earthquake-shaking-impact.html"><span>20</span>Earthquake Shaking</a></div>
+<div class="group infra"><h3>Infrastructure</h3><a href="09-power-grid-stress-extreme-weather.html"><span>09</span>Power Grid Stress</a><a href="11-internet-outage-watch.html"><span>11</span>Internet Outages</a></div>
+<div class="group env"><h3>Environment & agriculture</h3><a href="15-general-air-quality-health-risk.html"><span>15</span>Air Quality</a><a href="17-agricultural-drought-farm-exposure.html"><span>17</span>Agricultural Drought</a></div>
+<div class="group space"><h3>Space weather</h3><a href="19-aurora-geomagnetic-impact.html"><span>19</span>Aurora & Geomagnetic Conditions</a></div>
+<div class="group news"><h3>News & current events</h3><a href="05-breaking-news-geography.html"><span>05</span>Breaking News Geography</a></div>
+</div><p class="note">Some maps naturally span themes. For example, hurricanes connect weather and coastal flooding, while drought connects water supply and agriculture.</p></section>
+</div>
+<footer class="footer">© 2026 MitchellCo Inc. · Interactive public-data maps</footer>
+</main></body></html>
