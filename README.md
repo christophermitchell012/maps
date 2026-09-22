@@ -1,6 +1,6 @@
 # MitchellCo Interactive Data Maps
 
-Interactive, standalone public-data maps for weather, wildfire, earthquakes, drought, floods, infrastructure, environment, public risk, space weather, aviation, marine conditions, volcanoes, and current events.
+Interactive, standalone public-data maps for weather, wildfire, earthquakes, drought, floods, geology, infrastructure, environment, public risk, space weather, aviation, marine conditions, volcanoes, and current events.
 
 ## Published collection
 
@@ -8,7 +8,7 @@ Browse the collection at:
 
 https://christophermitchell012.github.io/maps/
 
-The repository currently contains the collection index plus Maps 00 through 23:
+The repository currently contains the collection index plus Maps 00 through 24:
 
 - 00 WildfireWatch
 - 01 Flash Flood & River Flood Risk
@@ -34,48 +34,49 @@ The repository currently contains the collection index plus Maps 00 through 23:
 - 21 AirTrafficWatch: U.S. Airport Delay & NAS Impact
 - 22 MarineWatch: U.S. Coastal Marine Conditions
 - 23 VolcanoWatch: U.S. Volcano Alert & Aviation Impact
+- 24 Deep Time Under Your Feet
 
 ## Repository architecture
 
-Numbered map HTML files live at the repository root:
+Numbered map HTML files live at the repository root as `NN-map-name.html`.
 
-`NN-map-name.html`
+Saved public-data snapshots and reusable geographic reference data live under `data/`. Maps should use same-origin relative paths such as `data/cdc-svi-2022-county.json`, `data/county-reference-2025-gazetteer-v1.json`, and `data/newspulse.json`.
 
-Saved public-data snapshots and reusable geographic reference data live under:
+Static, slow-changing, rate-limited, or browser-incompatible source data should be acquired and normalized at build time whenever practical, committed under `data/`, and loaded with relative same-origin paths. Runtime cross-origin requests should be reserved for sources with a clear anonymous/keyless browser-access contract and safe client fan-out. Do not use `daily-maps/` for new numbered maps.
 
-`data/`
+## Current roadmap
 
-Maps should use same-origin relative paths such as:
+The planned series currently runs through Map 61. The next priority maps are:
 
-`data/cdc-svi-2022-county.json`
+- 25 BloomWatch | What's Flowering Near You
+- 26 Dark Sky Tonight
+- 27 Watershed Explorer | What's Upstream and Downstream?
+- 28 Your Compass Lies
+- 29 Global Aviation Weather & Airspace Conditions
 
-`data/county-reference-2025-gazetteer-v1.json`
+Later roadmap topics cover global landslide, snow/ice, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis.
 
-`data/county-geometry-2025-cb20m-v1-*.geojson`
+## Map 24 source contract
 
-`data/newspulse.json`
-
-`data/newspulse-state.json`
-
-Static or slow-changing authoritative source data should be acquired and normalized at build time whenever practical, committed under `data/`, and loaded with relative same-origin paths. Runtime cross-origin requests should be reserved for sources with a clear anonymous/keyless browser CORS contract. Do not use `daily-maps/` for new numbered maps.
+Deep Time Under Your Feet uses Macrostrat's public geologic map tiles and point-query API for mapped surface geology, with source definitions used for original-provider attribution when available. Macrostrat data and tiles are CC BY 4.0. Plate reconstruction uses the EarthByte GPlates Web Service. The map supports MERDITH2021 and MULLER2022 through 1,000 Ma and ZAHIROVIC2022 through 410 Ma, subject to the model's own coverage. Invalid reconstructed coordinates are rejected. Surface geology is explicitly not presented as subsurface geology at foundation, aquifer, tunnel or well depth.
 
 ## Site and search files
 
-- `index.html` is the crawlable collection directory and should list every numbered map in the repository.
+- `index.html` is the crawlable collection directory and lists every numbered map.
 - `sitemap.xml` contains the index and every published numbered map.
 - `robots.txt` points crawlers to the sitemap.
 - `_config.yml` defines GitHub Pages metadata and the `/maps` base URL.
 - `site.webmanifest` identifies the collection as MitchellCo Interactive Data Maps.
 - `404.html` returns visitors to the collection index.
-- `data/` contains saved public-data snapshots and supporting geographic data used by maps.
+- `data/` contains saved public-data snapshots and supporting geographic data.
 
 ## Design goals
 
 - Browser-first standalone HTML where practical
-- Authoritative public data sources
-- Same-origin local snapshots for static/slow-changing data
-- No API keys, tokens, or account-based runtime authentication
-- No ArcGIS/Esri dependencies
+- Authoritative or explicitly approved public data sources
+- Same-origin local snapshots for static/slow/rate-limited data
+- No API keys, access credentials, or account-based runtime authentication
+- No prohibited proprietary GIS platform dependencies
 - Clear attribution and source links
 - Consistent GA4 analytics using `G-8SVEH8WD1R`
 - GitHub Pages friendly
