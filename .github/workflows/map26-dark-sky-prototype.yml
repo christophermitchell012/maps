@@ -5,6 +5,7 @@ on:
   push:
     paths:
       - ".github/workflows/map26-dark-sky-prototype.yml"
+      - "scripts/map26_darksky_prototype.py"
 
 permissions:
   contents: read
@@ -27,6 +28,18 @@ jobs:
         run: |
           if [ -z "$EARTHDATA_TOKEN" ]; then
             echo "::error::EARTHDATA_TOKEN repository secret is not configured"
+            exit 1
+          fi
+      - name: Verify NASA EDL token against LAADS
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location --cookie session \
+            -H "Authorization: Bearer $EARTHDATA_TOKEN" \
+            "https://ladsweb.modaps.eosdis.nasa.gov/archive/README" \
+            -o /tmp/laads-readme
+          test -s /tmp/laads-readme
+          if grep -qi "<html" /tmp/laads-readme; then
+            echo "::error::NASA returned HTML instead of archive content"
             exit 1
           fi
       - name: Run Austin, Big Bend, NYC test
