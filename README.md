@@ -1,6 +1,6 @@
 # MitchellCo Interactive Data Maps
 
-Interactive, standalone public-data maps for weather, wildfire, earthquakes, drought, floods, geology, infrastructure, environment, public risk, space weather, aviation, marine conditions, volcanoes, and current events.
+Interactive, standalone public-data maps for weather, wildfire, earthquakes, drought, floods, geology, infrastructure, environment, public risk, space weather, aviation, marine conditions, volcanoes, astronomy context, and current events.
 
 ## Published collection
 
@@ -8,7 +8,7 @@ Browse the collection at:
 
 https://christophermitchell012.github.io/maps/
 
-The repository currently contains the collection index plus Maps 00 through 24:
+The repository currently contains the collection index plus Maps 00 through 24 and Map 26:
 
 - 00 WildfireWatch
 - 01 Flash Flood & River Flood Risk
@@ -35,6 +35,9 @@ The repository currently contains the collection index plus Maps 00 through 24:
 - 22 MarineWatch: U.S. Coastal Marine Conditions
 - 23 VolcanoWatch: U.S. Volcano Alert & Aviation Impact
 - 24 Deep Time Under Your Feet
+- 26 Dark Sky Tonight
+
+Map 25 remains pending because its preferred iNaturalist observation data are intentionally build-time cached and the current automation environment could not acquire the required licensed observation snapshot safely. It was not replaced with per-visitor API fan-out.
 
 ## Repository architecture
 
@@ -49,10 +52,10 @@ Static, slow-changing, rate-limited, or browser-incompatible source data should 
 The planned series currently runs through Map 61. The next priority maps are:
 
 - 25 BloomWatch | What's Flowering Near You
-- 26 Dark Sky Tonight
 - 27 Watershed Explorer | What's Upstream and Downstream?
 - 28 Your Compass Lies
 - 29 Global Aviation Weather & Airspace Conditions
+- 30 Global Landslide Hazard & Rainfall Trigger Watch
 
 Later roadmap topics cover global landslide, snow/ice, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis.
 
@@ -60,9 +63,13 @@ Later roadmap topics cover global landslide, snow/ice, drought, marine heatwaves
 
 Deep Time Under Your Feet uses Macrostrat's public geologic map tiles and point-query API for mapped surface geology, with source definitions used for original-provider attribution when available. Macrostrat data and tiles are CC BY 4.0. Plate reconstruction uses the EarthByte GPlates Web Service. The map supports MERDITH2021 and MULLER2022 through 1,000 Ma and ZAHIROVIC2022 through 410 Ma, subject to the model's own coverage. Invalid reconstructed coordinates are rejected. Surface geology is explicitly not presented as subsurface geology at foundation, aquifer, tunnel or well depth.
 
+## Map 26 source contract
+
+Dark Sky Tonight uses NASA GIBS VIIRS Black Marble annual nighttime imagery at 2016-01-01 as a historical proxy for upward-emitted/artificial light, not direct sky brightness. NASA Earthdata states NASA-led mission data are generally CC0 unless specifically restricted and requests source acknowledgment. Current cloud context uses the anonymous NOAA/NWS `api.weather.gov` point and forecast-grid services for U.S. locations; NWS information is public domain unless specifically noted otherwise. Moon illumination and phase are calculated client-side from the current date. The displayed viewing rating is explicitly MitchellCo-derived from cloud cover and Moon illumination only, while artificial light remains a visual context layer rather than a falsely precise score.
+
 ## Site and search files
 
-- `index.html` is the crawlable collection directory and lists every numbered map.
+- `index.html` is the crawlable collection directory and should list every numbered map.
 - `sitemap.xml` contains the index and every published numbered map.
 - `robots.txt` points crawlers to the sitemap.
 - `_config.yml` defines GitHub Pages metadata and the `/maps` base URL.
