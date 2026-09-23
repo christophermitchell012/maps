@@ -187,11 +187,12 @@ def make_candidates():
         ]
         if not rural_pool:
             rural_pool = [x for x in vals if x["geoid"] not in used and x["population_2025_estimate"] >= 100]
-        rural = min(rural_pool, key=lambda x: (x["density_per_sqmi"] if x["density_per_sqmi"] is not None else 1e30, -x["land_sqmi"]))
-        chosen.append({**rural, "candidate_type": "low_density"})
-        used.add(rural["geoid"])
+        if rural_pool:
+            rural = min(rural_pool, key=lambda x: (x["density_per_sqmi"] if x["density_per_sqmi"] is not None else 1e30, -x["land_sqmi"]))
+            chosen.append({**rural, "candidate_type": "low_density"})
+            used.add(rural["geoid"])
 
-    # 48 contiguous states + DC = 49 jurisdictions => 98 places. Add two named,
+    # Most jurisdictions contribute two places; DC has only one incorporated place. Add named,
     # Census-sourced western gateway places to reach exactly 100.
     by_key = {(r["state"], r["name"].lower()): r for r in rows}
     for st, name in EXTRA_ORDER:
@@ -213,7 +214,7 @@ def make_candidates():
         "count": len(chosen),
         "scope": "100 representative Census places in the contiguous United States and District of Columbia",
         "source_tags": ["US_CENSUS_GAZETTEER_2025", "US_CENSUS_POP_EST_2025"],
-        "selection_method": "Highest-population and low-density incorporated place per contiguous state/DC using Vintage 2025 population estimates, plus two Census-sourced western gateway places.",
+        "selection_method": "Highest-population and low-density incorporated place per contiguous state/DC using Vintage 2025 population estimates, plus enough Census-sourced western gateway places to reach exactly 100.",
         "places": chosen,
     }
     CANDIDATES.parent.mkdir(parents=True, exist_ok=True)
