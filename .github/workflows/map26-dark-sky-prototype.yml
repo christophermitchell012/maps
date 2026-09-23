@@ -2,10 +2,6 @@ name: Map 26 Dark Sky Prototype
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - "scripts/map26_darksky_prototype.py"
-      - ".github/workflows/map26-dark-sky-prototype.yml"
 
 permissions:
   contents: read
