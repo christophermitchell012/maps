@@ -5,6 +5,9 @@ on:
   push:
     paths:
       - ".github/workflows/map26-100-benchmark.yml"
+      - "scripts/map26_100_benchmark.py"
+      - "scripts/map26_darksky_prototype.py"
+      - "prototypes/map26-100-benchmark.html"
 
 permissions:
   contents: write
@@ -69,7 +72,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/map26-100-prototype.json
+          git add data/map26-100-prototype.json data/map26-100-nws-grid-map.json
           if git diff --cached --quiet; then
             echo "No snapshot change"
           else
