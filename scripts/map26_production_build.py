@@ -73,7 +73,7 @@ def ms(t0):
 
 def clean_name(name: str) -> str:
     return re.sub(
-        r"\s+(city and borough|consolidated government|metropolitan government|municipality|borough|city|town|village|CDP)$",
+        r"\s+(city and borough|consolidated government|metropolitan government|metro government|unified government|municipality|borough|city|town|village|CDP)(?: \(balance\))?$",
         "", name, flags=re.I
     ).strip()
 
@@ -286,6 +286,8 @@ def load_or_make_radiance(candidates, token):
                 return p, True
         except Exception:
             pass
+    if not token:
+        raise RuntimeError("EARTHDATA_TOKEN is required only because the annual VNP46A4 radiance baseline is missing or stale")
     return build_radiance_baseline(candidates, token)
 
 
@@ -435,8 +437,6 @@ def score_place(p, rad, sky_values, now):
 def main():
     t_all = time.perf_counter()
     token = os.environ.get("EARTHDATA_TOKEN", "").strip()
-    if not token:
-        raise SystemExit("EARTHDATA_TOKEN is not set")
     timings = {}
 
     t = time.perf_counter()
@@ -476,7 +476,7 @@ def main():
         ranked = score_place(p, rad, sky.get(pid, []), now) if pid in sky else None
         row = {
             "id": pid,
-            "name": p["name"],
+            "name": clean_name(p["official_name"]),
             "official_name": p["official_name"],
             "state": p["state"],
             "candidate_type": p["candidate_type"],
