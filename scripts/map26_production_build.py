@@ -43,7 +43,7 @@ OUTPUT = Path("data/map26-tonight.json")
 BENCH = Path("artifacts/map26-production-build.json")
 
 CENSUS_GAZ_URL = "https://www2.census.gov/geo/docs/maps-data/data/gazetteer/2025_Gazetteer/2025_Gaz_place_national.zip"
-ACS_BASE = "https://api.census.gov/data/2024/acs/acs5"
+POP_EST_URL = "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
 CONTIGUOUS = {
     "AL","AZ","AR","CA","CO","CT","DE","DC","FL","GA","ID","IL","IN","IA","KS","KY","LA","ME","MD","MA",
     "MI","MN","MS","MO","MT","NE","NV","NH","NJ","NM","NY","NC","ND","OH","OK","OR","PA","RI","SC","SD",
@@ -134,41 +134,37 @@ def load_gazetteer():
     return rows
 
 
-def populations_for_state(state_abbr):
-    fips = STATE_FIPS[state_abbr]
-    url = f"{ACS_BASE}?get=NAME,B01003_001E&for=place:*&in=state:{fips}"
-    data = get_json(url)
-    hdr = data[0]
-    idx_pop = hdr.index("B01003_001E")
-    idx_state = hdr.index("state")
-    idx_place = hdr.index("place")
+def load_population_estimates():
+    raw = get_bytes(POP_EST_URL).decode("utf-8-sig", errors="replace")
     out = {}
-    for row in data[1:]:
+    for row in csv.DictReader(io.StringIO(raw)):
+        if row.get("SUMLEV") not in {"162", "170", "172"}:
+            continue
+        state = (row.get("STATE") or "").zfill(2)
+        place = (row.get("PLACE") or "").zfill(5)
+        if len(state) != 2 or len(place) != 5 or place == "00000":
+            continue
         try:
-            pop = int(row[idx_pop])
+            pop = int(row["POPESTIMATE2025"])
         except Exception:
             continue
-        out[row[idx_state] + row[idx_place]] = pop
-    return state_abbr, out
-
+        geoid = state + place
+        if geoid not in out or pop > out[geoid]:
+            out[geoid] = pop
+    return out
 
 def make_candidates():
     rows = load_gazetteer()
-    pop_by_geoid = {}
-    with ThreadPoolExecutor(max_workers=8) as ex:
-        futs = [ex.submit(populations_for_state, st) for st in sorted(CONTIGUOUS)]
-        for fut in as_completed(futs):
-            _, vals = fut.result()
-            pop_by_geoid.update(vals)
+    pop_by_geoid = load_population_estimates()
 
     for r in rows:
-        r["population_2024_acs5"] = pop_by_geoid.get(r["geoid"])
-        pop = r["population_2024_acs5"]
+        r["population_2025_estimate"] = pop_by_geoid.get(r["geoid"])
+        pop = r["population_2025_estimate"]
         r["density_per_sqmi"] = None if pop is None or r["land_sqmi"] <= 0 else pop / r["land_sqmi"]
 
     by_state = defaultdict(list)
     for r in rows:
-        if r["population_2024_acs5"] is not None:
+        if r["population_2025_estimate"] is not None:
             by_state[r["state"]].append(r)
 
     chosen = []
@@ -178,19 +174,19 @@ def make_candidates():
         if not vals:
             raise RuntimeError(f"No Census/ACS place candidates for {st}")
 
-        major = max(vals, key=lambda x: x["population_2024_acs5"])
+        major = max(vals, key=lambda x: x["population_2025_estimate"])
         chosen.append({**major, "candidate_type": "major"})
         used.add(major["geoid"])
 
         rural_pool = [
             x for x in vals
             if x["geoid"] not in used
-            and 100 <= x["population_2024_acs5"] <= 10000
+            and 100 <= x["population_2025_estimate"] <= 10000
             and 0.25 <= x["land_sqmi"] <= 250
             and x["density_per_sqmi"] is not None
         ]
         if not rural_pool:
-            rural_pool = [x for x in vals if x["geoid"] not in used and x["population_2024_acs5"] >= 100]
+            rural_pool = [x for x in vals if x["geoid"] not in used and x["population_2025_estimate"] >= 100]
         rural = min(rural_pool, key=lambda x: (x["density_per_sqmi"] if x["density_per_sqmi"] is not None else 1e30, -x["land_sqmi"]))
         chosen.append({**rural, "candidate_type": "low_density"})
         used.add(rural["geoid"])
@@ -216,8 +212,8 @@ def make_candidates():
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "count": len(chosen),
         "scope": "100 representative Census places in the contiguous United States and District of Columbia",
-        "source_tags": ["US_CENSUS_GAZETTEER_2025", "US_CENSUS_ACS5_2024"],
-        "selection_method": "Highest-population and low-density place per contiguous state/DC, plus two Census-sourced western gateway places.",
+        "source_tags": ["US_CENSUS_GAZETTEER_2025", "US_CENSUS_POP_EST_2025"],
+        "selection_method": "Highest-population and low-density incorporated place per contiguous state/DC using Vintage 2025 population estimates, plus two Census-sourced western gateway places.",
         "places": chosen,
     }
     CANDIDATES.parent.mkdir(parents=True, exist_ok=True)
@@ -485,7 +481,7 @@ def main():
             "candidate_type": p["candidate_type"],
             "lat": round(float(p["lat"]), 5),
             "lon": round(float(p["lon"]), 5),
-            "population_2024_acs5": p.get("population_2024_acs5"),
+            "population_2025_estimate": p.get("population_2025_estimate"),
             "radiance_nw_cm2_sr": rad,
             "radiance_quality": rv.get("radiance_quality"),
             "status": "ranked" if ranked else "unavailable",
@@ -507,7 +503,7 @@ def main():
         "candidate_count": len(candidates),
         "ranked_count": len(ranked_rows),
         "scope": cand_payload["scope"],
-        "source_tags": ["NASA_LAADS_VNP46A4", "NOAA_NWS_API", "US_CENSUS_GAZETTEER_2025", "US_CENSUS_ACS5_2024"],
+        "source_tags": ["NASA_LAADS_VNP46A4", "NOAA_NWS_API", "US_CENSUS_GAZETTEER_2025", "US_CENSUS_POP_EST_2025"],
         "method": {
             "name": "MitchellCo Tonight Score v2",
             "official": False,
