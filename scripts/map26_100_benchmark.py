@@ -28,6 +28,7 @@ from map26_darksky_prototype import (
 MAX_NWS_WORKERS = 6
 OUT = Path("data/map26-100-prototype.json")
 ARTIFACT = Path("artifacts/map26-100-python-benchmark.json")
+GRID_CACHE = Path("data/map26-100-nws-grid-map.json")
 
 
 def ms(t0: float) -> float:
@@ -173,11 +174,40 @@ def main():
         p["radiance_quality"] = qa
     timings["extract_100_radiance_pixels_ms"] = ms(t0)
 
-    # Phase 1 is intentionally measured separately because forecast-grid URLs are
-    # stable enough to cache in a future build, eliminating these 100 lookups.
+    # NWS /points -> forecastGridData mapping is much more stable than the forecast.
+    # Persist it so normal refreshes can skip 100 point-resolution requests.
     t0 = time.perf_counter()
-    resolve_items = [(p["id"], (p,)) for p in points]
-    grids, grid_errors = parallel_map(resolve_grid, resolve_items)
+    grids, grid_errors, grid_cache_hit = {}, {}, False
+    if GRID_CACHE.exists():
+        try:
+            cached = json.loads(GRID_CACHE.read_text(encoding="utf-8"))
+            entries = cached.get("locations", [])
+            by_id = {x["id"]: x for x in entries}
+            if len(by_id) == len(points) and all(
+                pid in by_id
+                and abs(float(by_id[pid]["lat"]) - float(pt["lat"])) < 1e-8
+                and abs(float(by_id[pid]["lon"]) - float(pt["lon"])) < 1e-8
+                and by_id[pid].get("forecast_grid_url")
+                for pid, pt in ((p["id"], p) for p in points)
+            ):
+                grids = {pid: by_id[pid]["forecast_grid_url"] for pid in by_id}
+                grid_cache_hit = True
+        except Exception:
+            grids = {}
+    if not grid_cache_hit:
+        resolve_items = [(p["id"], (p,)) for p in points]
+        grids, grid_errors = parallel_map(resolve_grid, resolve_items)
+        if len(grids) == len(points):
+            GRID_CACHE.parent.mkdir(parents=True, exist_ok=True)
+            GRID_CACHE.write_text(json.dumps({
+                "generated_at": datetime.now(timezone.utc).isoformat(),
+                "source_tag": "NOAA_NWS_API",
+                "note": "Build-time cache of NWS /points forecastGridData mappings for synthetic Map 26 benchmark points.",
+                "locations": [
+                    {"id": p["id"], "lat": p["lat"], "lon": p["lon"], "forecast_grid_url": grids[p["id"]]}
+                    for p in points
+                ],
+            }, separators=(",", ":")) + "\n", encoding="utf-8")
     timings["nws_resolve_100_grid_urls_ms"] = ms(t0)
 
     t0 = time.perf_counter()
@@ -233,6 +263,7 @@ def main():
         "location_count": len(points),
         "rankable_count": len(ranked),
         "nws_failure_count": len(failures),
+        "nws_grid_cache_hit": grid_cache_hit,
         "unique_nasa_tiles": unique_tiles,
         "unique_nasa_tile_count": len(unique_tiles),
         "nasa_hdf5_bytes": nasa_bytes,
