@@ -14,6 +14,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
 const map=L.map('map',{preferCanvas:true,zoomControl:true,attributionControl:false}).setView([35.5,-91],4);
+const sharedRenderer=L.canvas({padding:.15});
 let layer=L.layerGroup().addTo(map);
 const $=id=>document.getElementById(id);
 function moonInfo(d){const syn=29.530588853,known=Date.UTC(2000,0,6,18,14),days=(d.getTime()-known)/86400000,age=((days%syn)+syn)%syn,frac=(1-Math.cos(2*Math.PI*age/syn))/2;return Math.round(frac*100)}
@@ -27,7 +28,7 @@ async function runBenchmark(){
   let t=performance.now(); const res=await fetch('../data/map26-100-prototype.json',{cache:'no-store'}); const text=await res.text(); const fetchMs=performance.now()-t;
   t=performance.now(); const payload=JSON.parse(text); const parseMs=performance.now()-t;
   t=performance.now(); const ranked=payload.locations.map(p=>{const mp=moonInfo(new Date(p.target_time_utc));return {...p,score:(p.radiance_nw_cm2_sr==null||p.cloud_percent==null)?null:calc(p.radiance_nw_cm2_sr,p.cloud_percent,mp)}}).filter(p=>p.score!=null).sort((a,b)=>b.score-a.score); const computeSortMs=performance.now()-t;
-  t=performance.now(); for(const p of ranked){L.circleMarker([p.lat,p.lon],{renderer:L.canvas(),radius:4,weight:1,fillOpacity:.72}).bindTooltip(`${p.name}<br>Score ${p.score.toFixed(1)}`).addTo(layer)} const markerEnqueueMs=performance.now()-t;
+  t=performance.now(); for(const p of ranked){L.circleMarker([p.lat,p.lon],{renderer:sharedRenderer,radius:4,weight:1,fillOpacity:.72}).bindTooltip(`${p.name}<br>Score ${p.score.toFixed(1)}`).addTo(layer)} const markerEnqueueMs=performance.now()-t;
   t=performance.now(); renderList($('best'),ranked.slice(0,10)); renderList($('worst'),ranked.slice(-10).reverse()); const listDomMs=performance.now()-t;
   t=performance.now(); await tick(); const paintSettleMs=performance.now()-t;
   const totalMs=performance.now()-total0;
