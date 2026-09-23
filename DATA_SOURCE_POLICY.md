@@ -37,6 +37,29 @@ Do not silently accept an EULA as part of map generation.
 
 ## Source registry
 
+
+### US_CENSUS_GAZETTEER_2025
+Status: **ALLOWED**
+
+Use: 2025 U.S. Census Bureau Gazetteer place names and representative latitude/longitude coordinates.
+
+Public-map rules:
+- Identify the U.S. Census Bureau and the 2025 Gazetteer as the source.
+- Link to the official Gazetteer page and current Census website/API policies.
+- Do not imply Census Bureau endorsement.
+- Use the geographic data only at aggregate place level. Do not combine Census data in a way intended to identify an individual, household, business, or respondent.
+
+### US_CENSUS_ACS5_2024
+Status: **ALLOWED**
+
+Use: 2024 American Community Survey 5-year place population (B01003_001E) solely to construct the 100-place representative candidate set.
+
+Public-map rules:
+- Identify the U.S. Census Bureau, ACS 2024 5-year estimate, and variable purpose.
+- Do not present the ACS population as current real-time population.
+- Follow Census API terms prohibiting attempts to identify individual respondents or establishments.
+- Do not imply Census Bureau endorsement.
+
 ### NASA_LAADS_VNP46A4
 Status: **ALLOWED**
 
