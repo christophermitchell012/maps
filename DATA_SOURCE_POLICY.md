@@ -49,15 +49,15 @@ Public-map rules:
 - Do not imply Census Bureau endorsement.
 - Use the geographic data only at aggregate place level. Do not combine Census data in a way intended to identify an individual, household, business, or respondent.
 
-### US_CENSUS_ACS5_2024
+### US_CENSUS_POP_EST_2025
 Status: **ALLOWED**
 
-Use: 2024 American Community Survey 5-year place population (B01003_001E) solely to construct the 100-place representative candidate set.
+Use: U.S. Census Bureau Vintage 2025 subcounty resident population estimates for incorporated places, specifically the July 1, 2025 `POPESTIMATE2025` field, solely to construct the 100-place representative candidate set.
 
 Public-map rules:
-- Identify the U.S. Census Bureau, ACS 2024 5-year estimate, and variable purpose.
-- Do not present the ACS population as current real-time population.
-- Follow Census API terms prohibiting attempts to identify individual respondents or establishments.
+- Identify the U.S. Census Bureau Population Estimates Program, Vintage 2025, and the July 1, 2025 reference date.
+- Do not present the population estimate as real-time population.
+- Preserve the geographic meaning of the source place FIPS when joining to Gazetteer coordinates.
 - Do not imply Census Bureau endorsement.
 
 ### NASA_LAADS_VNP46A4
