@@ -1,14 +1,7 @@
-# warm-cache validation 2026-09-23
 name: Map 26 100-location Benchmark
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - ".github/workflows/map26-100-benchmark.yml"
-      - "scripts/map26_100_benchmark.py"
-      - "scripts/map26_darksky_prototype.py"
-      - "prototypes/map26-100-benchmark.html"
 
 permissions:
   contents: write
