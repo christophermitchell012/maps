@@ -68,12 +68,23 @@ def find_ds(h5, base):
     if len(out)!=1: raise KeyError(f"{base}: found {len(out)}")
     return out[0]
 
+def _scalar(v, default=None):
+    if v is None: return default
+    if hasattr(v, "reshape"):
+        arr=v.reshape(-1)
+        return arr[0].item() if hasattr(arr[0], "item") else arr[0]
+    if isinstance(v,(list,tuple)):
+        return v[0] if v else default
+    return v
+
 def extract(path,a):
     with h5py.File(path,"r") as h5:
         r=find_ds(h5,RAD); q=find_ds(h5,QA)
-        raw=r[a.row,a.col]; fill=r.attrs.get("_FillValue")
-        rv=None if fill is not None and int(raw)==int(fill) else float(raw)*float(r.attrs.get("scale_factor",1.0))+float(r.attrs.get("offset",0.0))
-        qr=q[a.row,a.col]; qfill=q.attrs.get("_FillValue")
+        raw=_scalar(r[a.row,a.col]); fill=_scalar(r.attrs.get("_FillValue"))
+        scale=float(_scalar(r.attrs.get("scale_factor"),1.0))
+        offset=float(_scalar(r.attrs.get("offset"),0.0))
+        rv=None if fill is not None and int(raw)==int(fill) else float(raw)*scale+offset
+        qr=_scalar(q[a.row,a.col]); qfill=_scalar(q.attrs.get("_FillValue"))
         qv=None if qfill is not None and int(qr)==int(qfill) else int(qr)
         return rv,qv
 
