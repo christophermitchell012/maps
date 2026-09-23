@@ -7,7 +7,7 @@ AllAngle_Composite_Snow_Free radiance + QA, queries NWS skyCover, computes the
 same Moon model as Map 26, and emits JSON. The token is never written to output.
 """
 from __future__ import annotations
-import json, math, os, re, tempfile
+import json, math, os, re, subprocess, tempfile
 from dataclasses import asdict, dataclass
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -87,14 +87,27 @@ def granule(tile,html):
 
 def download(name,token,cache,session):
     p=cache/name
-    if p.exists() and p.stat().st_size>1024*1024: return p
+    if p.exists() and p.stat().st_size>1024*1024 and h5py.is_hdf5(p): return p
+    if p.exists(): p.unlink()
     url=f"{LAADS_BASE}/{YEAR}/001/{name}"
-    with session.get(url,headers={"Authorization":f"Bearer {token}"},stream=True,timeout=(30,300)) as r:
-        r.raise_for_status()
-        if "text/html" in r.headers.get("Content-Type",""): raise RuntimeError("NASA returned HTML; authentication likely failed")
-        with p.open("wb") as f:
-            for chunk in r.iter_content(1024*1024):
-                if chunk: f.write(chunk)
+    # NASA LAADS documents EDL-token downloads with curl -L -b session.
+    # Feed the config over stdin so the token never appears in argv or output.
+    cfg=(
+        "location\n"
+        "fail\n"
+        "silent\n"
+        "show-error\n"
+        'cookie = "session"\n'
+        f'header = "Authorization: Bearer {token.strip()}"\n'
+        f'url = "{url}"\n'
+        f'output = "{p}"\n'
+    )
+    cp=subprocess.run(["curl","--config","-"],input=cfg,text=True,capture_output=True)
+    if cp.returncode:
+        raise RuntimeError("NASA curl download failed: "+cp.stderr.strip()[-500:])
+    if not p.exists() or not h5py.is_hdf5(p):
+        if p.exists(): p.unlink()
+        raise RuntimeError("NASA response was not a valid HDF5 file")
     return p
 
 def nws(lat,lon,target,session):
