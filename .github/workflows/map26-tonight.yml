@@ -7,6 +7,10 @@ on:
   push:
     paths:
       - ".github/workflows/map26-tonight.yml"
+      - "scripts/map26_production_build.py"
+      - "scripts/map26_darksky_prototype.py"
+      - "scripts/map26_production_smoke.mjs"
+      - "26-dark-sky-tonight.html"
 
 permissions:
   contents: write
