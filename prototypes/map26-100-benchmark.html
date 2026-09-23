@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Map 26 · 100-location browser benchmark</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<style>:root{color-scheme:dark;--bg:#080b12;--panel:#111722;--card:#182130;--line:#334154;--text:#f4f6fb;--muted:#a5b0c0;--gold:#ffd45d}*{box-sizing:border-box}html,body{height:100%;margin:0}body{background:var(--bg);color:var(--text);font:13px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}.shell{height:100%;display:grid;grid-template-columns:340px 1fr}.side{overflow:auto;padding:12px;background:var(--panel);border-right:1px solid var(--line)}#map{height:100%;background:#0b1018}.card{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:10px;margin-bottom:10px}h1{font-size:16px;margin:0 0 4px}h2{font-size:12px;margin:0 0 6px}.muted{color:var(--muted);font-size:11px}.metric{display:grid;grid-template-columns:1fr auto;gap:4px 8px}.metric b{font-family:ui-monospace,monospace}.cols{display:grid;grid-template-columns:1fr 1fr;gap:8px}.rank{font-size:11px;margin:0;padding-left:20px}.rank li{margin:2px 0}button{background:#202b3b;color:var(--text);border:1px solid var(--line);border-radius:6px;padding:6px 9px;cursor:pointer}@media(max-width:720px){.shell{grid-template-columns:1fr;grid-template-rows:46vh 54vh}.side{border-right:0;border-bottom:1px solid var(--line)}#map{min-height:54vh}}</style></head>
+<body><div class="shell"><aside class="side">
+<div class="card"><h1>Map 26 · 100-location benchmark</h1><div class="muted">Prototype only. Measures the incremental cost of loading one prebuilt JSON snapshot, scoring 100 locations, sorting them, rendering two ranking lists and adding 100 Leaflet circle markers. It intentionally excludes basemap/GIBS tile-network time.</div></div>
+<div class="card"><button id="run">Run benchmark</button> <span id="status" class="muted">Ready</span></div>
+<div class="card"><h2>Browser timings</h2><div id="metrics" class="metric"><span>Not run</span><b>—</b></div></div>
+<div class="cols"><div class="card"><h2>Best 10 prototype</h2><ol id="best" class="rank"></ol></div><div class="card"><h2>Worst 10 prototype</h2><ol id="worst" class="rank"></ol></div></div>
+<div class="card muted">Scores are performance-test values, not final observing recommendations. Source provenance: <a href="../data-sources-licenses.html#map26">data sources and licenses</a>.</div>
+</aside><main id="map"></main></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+const map=L.map('map',{preferCanvas:true,zoomControl:true,attributionControl:false}).setView([35.5,-91],4);
+let layer=L.layerGroup().addTo(map);
+const $=id=>document.getElementById(id);
+function moonInfo(d){const syn=29.530588853,known=Date.UTC(2000,0,6,18,14),days=(d.getTime()-known)/86400000,age=((days%syn)+syn)%syn,frac=(1-Math.cos(2*Math.PI*age/syn))/2;return Math.round(frac*100)}
+function calc(rad,cloud,moon){const lp=Math.max(0,Math.min(100,25*Math.log10(1+Math.max(0,rad))));return Math.round(Math.max(0,Math.min(100,100-(.55*lp+.35*cloud+.10*moon)))*10)/10}
+const tick=()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+function renderList(el,arr){el.replaceChildren(...arr.map(p=>{const li=document.createElement('li');li.textContent=`${p.name}: ${p.score.toFixed(1)}`;return li}))}
+function showMetrics(m){$('metrics').innerHTML=Object.entries(m).map(([k,v])=>`<span>${k}</span><b>${typeof v==='number'?v.toFixed(2):v}</b>`).join('')}
+async function runBenchmark(){
+  $('status').textContent='Running…'; layer.clearLayers(); $('best').replaceChildren(); $('worst').replaceChildren();
+  const total0=performance.now();
+  let t=performance.now(); const res=await fetch('../data/map26-100-prototype.json',{cache:'no-store'}); const text=await res.text(); const fetchMs=performance.now()-t;
+  t=performance.now(); const payload=JSON.parse(text); const parseMs=performance.now()-t;
+  t=performance.now(); const ranked=payload.locations.map(p=>{const mp=moonInfo(new Date(p.target_time_utc));return {...p,score:(p.radiance_nw_cm2_sr==null||p.cloud_percent==null)?null:calc(p.radiance_nw_cm2_sr,p.cloud_percent,mp)}}).filter(p=>p.score!=null).sort((a,b)=>b.score-a.score); const computeSortMs=performance.now()-t;
+  t=performance.now(); for(const p of ranked){L.circleMarker([p.lat,p.lon],{renderer:L.canvas(),radius:4,weight:1,fillOpacity:.72}).bindTooltip(`${p.name}<br>Score ${p.score.toFixed(1)}`).addTo(layer)} const markerEnqueueMs=performance.now()-t;
+  t=performance.now(); renderList($('best'),ranked.slice(0,10)); renderList($('worst'),ranked.slice(-10).reverse()); const listDomMs=performance.now()-t;
+  t=performance.now(); await tick(); const paintSettleMs=performance.now()-t;
+  const totalMs=performance.now()-total0;
+  const metrics={locations:ranked.length,jsonBytes:text.length,fetchMs,parseMs,computeSortMs,markerEnqueueMs,listDomMs,paintSettleMs,totalMs};
+  showMetrics(metrics); $('status').textContent='Complete';
+  window.__map26Benchmark={done:true,metrics,best:ranked.slice(0,3).map(p=>({id:p.id,score:p.score})),worst:ranked.slice(-3).map(p=>({id:p.id,score:p.score}))};
+  return window.__map26Benchmark;
+}
+$('run').onclick=runBenchmark;
+if(new URLSearchParams(location.search).get('autorun')==='1') runBenchmark();
+</script></body></html>
