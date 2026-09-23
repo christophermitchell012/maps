@@ -42,6 +42,18 @@ jobs:
             echo "::error::NASA returned HTML instead of archive content"
             exit 1
           fi
+      - name: Probe real VNP46A4 file
+        shell: bash
+        run: |
+          curl --fail --silent --show-error --location --cookie session \
+            -H "Authorization: Bearer $EARTHDATA_TOKEN" \
+            --range 0-31 \
+            -w "HTTP=%{http_code} TYPE=%{content_type} BYTES=%{size_download} FINAL=%{url_effective}\n" \
+            "https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/5200/VNP46A4/2024/001/VNP46A4.A2024001.h08v05.002.2025161223601.h5" \
+            -o /tmp/vnp46-probe
+          echo -n "MAGIC="
+          xxd -p -l 8 /tmp/vnp46-probe
+          file /tmp/vnp46-probe
       - name: Run Austin, Big Bend, NYC test
         run: python scripts/map26_darksky_prototype.py
       - name: Upload result
