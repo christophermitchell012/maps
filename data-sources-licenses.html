@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data Sources and Licenses | MitchellCo Interactive Maps</title>
+<meta name="description" content="Data provenance, citations, licenses, EULA notes and attribution for MitchellCo interactive maps.">
+<meta name="robots" content="index,follow"><link rel="canonical" href="https://christophermitchell012.github.io/maps/data-sources-licenses.html">
+<style>:root{color-scheme:dark;--bg:#080b12;--panel:#111722;--card:#182130;--line:#334154;--text:#f4f6fb;--muted:#a9b4c4;--link:#8ec5ff;--ok:#78e6a0}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}main{max-width:980px;margin:auto;padding:28px 18px 60px}h1{font-size:27px;margin:0 0 6px}h2{font-size:20px;margin:30px 0 10px}h3{font-size:16px;margin:22px 0 7px}.muted{color:var(--muted)}.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}.tag{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:11px;color:var(--ok)}a{color:var(--link)}code{background:#0c1119;padding:1px 5px;border-radius:4px}ul{padding-left:21px}.back{display:inline-block;margin-bottom:16px}</style></head>
+<body><main>
+<a class="back" href="index.html">← MitchellCo Interactive Maps</a>
+<h1>Data sources and licenses</h1>
+<p class="muted">MitchellCo uses this page to provide more source, license, provenance and attribution information than can reasonably fit inside a map control. This is an operational publication record, not legal advice. Source terms can change, so links below point to the source organizations' current guidance.</p>
+<div class="card"><b>Publication policy</b><p>MitchellCo public maps fail closed on source permissions: sources classified as blocked, needing clearance, unknown, or unreviewed are not intentionally published. Derived scores and interpretations are MitchellCo products, not products or endorsements of the underlying data providers. MitchellCo does not use NASA, NOAA/NWS, or other government logos as site branding.</p></div>
+
+<h2 id="map26">Map 26 · Dark Sky Tonight</h2>
+
+<h3>NASA VIIRS Black Marble annual imagery, 2016</h3>
+<span class="tag">Rendered reference imagery</span>
+<p><b>Visible map credit:</b> NASA Worldview / GIBS · Suomi NPP/VIIRS via NASA Earth Observatory · Black Marble 2016.</p>
+<p>The map's historical nighttime-light overlay is delivered through NASA's Global Imagery Browse Services (GIBS). NASA Worldview identifies the layer as <i>Black Marble - Nighttime Lights only (Annual, 2012 &amp; 2016)</i> from Suomi NPP/VIIRS via NASA Earth Observatory. MitchellCo uses the 2016 layer as historical visual context, not as a current sky-brightness measurement.</p>
+<ul>
+<li><a href="https://worldview.earthdata.nasa.gov/" target="_blank" rel="noopener">NASA Worldview</a></li>
+<li><a href="https://www.earthdata.nasa.gov/news/blog/worldview-snapshots-imagery-use-citation-information" target="_blank" rel="noopener">NASA Earthdata imagery-use / citation guidance</a></li>
+<li><a href="https://www.nasa.gov/nasa-brand-center/images-and-media/" target="_blank" rel="noopener">NASA Images and Media Usage Guidelines</a></li>
+</ul>
+<p><b>Non-endorsement:</b> NASA does not endorse MitchellCo, this map, or the MitchellCo viewing score. No NASA insignia, logotype or seal is used as MitchellCo branding. NASA-hosted third-party copyrighted material, if specifically marked as such, is not treated as covered by NASA's general imagery guidance.</p>
+
+<h3>NASA VIIRS VNP46A4 Collection 2, 2024</h3>
+<span class="tag">Scientific radiance data</span>
+<p>The ranking prototype uses the <b>2024</b> annual VNP46A4 Collection 2 product at build time. The Earthdata token used to access LAADS is a private build credential and is not included in public HTML, JavaScript or JSON.</p>
+<p><b>Dataset citation supplied for the product:</b><br>
+NASA VIIRS Land Science Investigator-led Processing System. (2025). <i>VIIRS/NPP Lunar BRDF-Adjusted Nighttime Lights Yearly L3 Global 15 arc second Linear Lat Lon Grid</i> [Dataset]. NASA Level 1 and Atmosphere Archive and Distribution System Distributed Active Archive Center. <a href="https://doi.org/10.5067/VIIRS/VNP46A4.002" target="_blank" rel="noopener">doi:10.5067/VIIRS/VNP46A4.002</a>.</p>
+<p>MitchellCo reports the source radiance in nW/(cm²·sr). It is an upward-emitted/nighttime radiance measure, not a Bortle class and not a direct measurement of zenith sky brightness.</p>
+
+<h3>NOAA / National Weather Service API</h3>
+<span class="tag">Forecast data</span>
+<p>Cloud-cover values come from the NOAA/NWS API and retain their forecast time. NWS states that its web information is public domain unless specifically noted otherwise and requires users not to imply government endorsement or present modified content as official government material.</p>
+<ul>
+<li><a href="https://www.weather.gov/documentation/services-web-api" target="_blank" rel="noopener">NWS API documentation</a></li>
+<li><a href="https://www.weather.gov/disclaimer" target="_blank" rel="noopener">NWS disclaimer and reuse conditions</a></li>
+</ul>
+<p>MitchellCo's viewing score is derived from source data and is not an official NOAA/NWS forecast. Internet delivery is not guaranteed.</p>
+
+<h3>OpenStreetMap</h3>
+<span class="tag">Basemap</span>
+<p><b>Attribution:</b> © OpenStreetMap contributors. OpenStreetMap data are available under the Open Data Commons Open Database License (ODbL). MitchellCo's web maps use the standard OSM tile service only for normal interactive viewing and do not intentionally bulk-download or prefetch tiles.</p>
+<ul>
+<li><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap copyright and ODbL information</a></li>
+<li><a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">OpenStreetMap tile usage policy</a></li>
+</ul>
+
+<h3>Leaflet 1.9.4</h3>
+<span class="tag">Map rendering software</span>
+<p>Interactive map rendering uses <a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet</a> 1.9.4, distributed under the BSD-2-Clause license.</p>
+
+<h2>Release philosophy</h2>
+<p>When a source requires a specific notice, year, copyright statement, citation, or license link, MitchellCo retains it. If the required year is not known from the source data, publication is held rather than guessed. Sources with unresolved commercial-use or redistribution terms are excluded until cleared.</p>
+<p class="muted">Last source-policy review: 2026-09-23 · © 2026 <a href="https://mitchellcoinc.com/" target="_blank" rel="noopener">MitchellCo Inc.</a></p>
+</main></body></html>
