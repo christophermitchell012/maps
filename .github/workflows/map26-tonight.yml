@@ -12,6 +12,10 @@ on:
       - "scripts/map26_production_smoke.mjs"
       - "26-dark-sky-tonight.html"
 
+concurrency:
+  group: map26-tonight
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -75,5 +79,6 @@ jobs:
             echo "No data changes"
           else
             git commit -m "Refresh Map 26 tonight rankings"
+            git pull --rebase origin main
             git push
           fi
