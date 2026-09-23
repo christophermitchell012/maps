@@ -131,7 +131,9 @@ def nws(lat,lon,target,session):
 
 def score(rad,cloud,moonpct):
     lp=max(0,min(100,25*math.log10(1+max(0,rad))))
-    return round(max(0,min(100,100-(.55*lp+.35*cloud+.10*moonpct))),1)
+    raw=max(0,min(100,100-(.55*lp+.35*cloud+.10*moonpct)))
+    # Match JavaScript Math.round semantics for positive scores.
+    return math.floor(raw*10+0.5)/10
 
 def self_test():
     exp={"Austin":("h08v05",2335,541),"Big Bend":("h07v06",180,1620),"New York City":("h10v04",2228,1438)}
