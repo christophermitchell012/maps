@@ -18,6 +18,7 @@ concurrency:
 
 permissions:
   contents: write
+  actions: write
 
 jobs:
   build:
@@ -82,3 +83,7 @@ jobs:
             git pull --rebase origin main
             git push
           fi
+      - name: Deploy refreshed snapshot to Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main
