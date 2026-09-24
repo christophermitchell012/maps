@@ -8,7 +8,7 @@ Browse the collection at:
 
 https://christophermitchell012.github.io/maps/
 
-The repository currently contains the collection index plus Maps 00 through 24 and Map 26:
+The repository currently contains the collection index plus Maps 00 through 26:
 
 - 00 WildfireWatch
 - 01 Flash Flood & River Flood Risk
@@ -35,9 +35,9 @@ The repository currently contains the collection index plus Maps 00 through 24 a
 - 22 MarineWatch: U.S. Coastal Marine Conditions
 - 23 VolcanoWatch: U.S. Volcano Alert & Aviation Impact
 - 24 Deep Time Under Your Feet
+- 25 Watershed Explorer | What's Upstream and Downstream?
 - 26 Dark Sky Tonight
 
-Map 25 remains pending because its preferred iNaturalist observation data are intentionally build-time cached and the current automation environment could not acquire the required licensed observation snapshot safely. It was not replaced with per-visitor API fan-out.
 
 ## Repository architecture
 
@@ -51,17 +51,21 @@ Static, slow-changing, rate-limited, or browser-incompatible source data should 
 
 The planned series currently runs through Map 61. The next priority maps are:
 
-- 25 BloomWatch | What's Flowering Near You
-- 27 Watershed Explorer | What's Upstream and Downstream?
-- 28 Your Compass Lies
-- 29 Global Aviation Weather & Airspace Conditions
-- 30 Global Landslide Hazard & Rainfall Trigger Watch
+- 27 Your Compass Lies
+- 28 Global Aviation Weather & Airspace Conditions
+- 29 Global Landslide Hazard & Rainfall Trigger Watch
+- 30 Northern Hemisphere Snow & Ice Conditions
+- 31 Groundwater Level & Drought Stress
 
-Later roadmap topics cover global landslide, snow/ice, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis.
+Later roadmap topics cover river ice, lightning, severe weather, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis. BloomWatch has moved to Map 61 and remains deferred until a clearly redistributable flowering-observation source contract is available.
 
 ## Map 24 source contract
 
 Deep Time Under Your Feet uses Macrostrat's public geologic map tiles and point-query API for mapped surface geology, with source definitions used for original-provider attribution when available. Macrostrat data and tiles are CC BY 4.0. Plate reconstruction uses the EarthByte GPlates Web Service. The map supports MERDITH2021 and MULLER2022 through 1,000 Ma and ZAHIROVIC2022 through 410 Ma, subject to the model's own coverage. Invalid reconstructed coordinates are rejected. Surface geology is explicitly not presented as subsurface geology at foundation, aquifer, tunnel or well depth.
+
+## Map 25 source contract
+
+Watershed Explorer uses the current USGS Network Linked Data Index at `api.water.usgs.gov/nldi/linked-data`. A click uses the `comid/position` endpoint to resolve a NHDPlusV2 network location, then requests an explicit-distance upstream trace (all tributaries or mainstem) and downstream mainstem flowlines. The default is 25 km; 10, 50 and 100 km are user-selectable, and unconstrained navigation is never requested. Responses are GeoJSON and repeated requests are cached only in the browser session. USGS-authored data and information are public domain in the United States and are credited to the U.S. Geological Survey. The map presents network connectivity only, not contaminant travel time, discharge, flood forecasting or proof of current flow.
 
 ## Map 26 source contract
 

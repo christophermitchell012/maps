@@ -91,6 +91,19 @@ Public-map rules:
 - If a NASA-hosted image/product is separately marked as third-party copyrighted, do not assume NASA's general imagery guidance grants reuse rights.
 - Preserve all notices carried by the source.
 
+### USGS_NLDI_NHDPLUSV2
+Status: **ALLOWED**
+
+Use: USGS Network Linked Data Index (NLDI) and NHDPlusV2 network-linked flowline geometry.
+
+Public-map rules:
+- Use the current `https://api.water.usgs.gov/nldi/linked-data` base, not the legacy NLDI host.
+- Credit the U.S. Geological Survey.
+- Request explicit navigation distances; never rely on the very large implicit navigation default.
+- Treat upstream/downstream results as modeled hydrologic network connectivity, not contaminant travel time, current discharge, flood forecasting, or proof of current flow.
+- Browser runtime requests are permitted for Map 25 because the source contract is anonymous/keyless and the map limits fan-out to one position lookup plus two bounded navigation requests per interaction.
+- Do not use the USGS visual identifier/logo as MitchellCo branding.
+
 ### NOAA_NWS_API
 Status: **ALLOWED**
 
