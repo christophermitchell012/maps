@@ -104,6 +104,20 @@ Public-map rules:
 - Browser runtime requests are permitted for Map 25 because the source contract is anonymous/keyless and the map limits fan-out to one position lookup plus two bounded navigation requests per interaction.
 - Do not use the USGS visual identifier/logo as MitchellCo branding.
 
+### NOAA_NCEI_WMM2025
+Status: **ALLOWED**
+
+Use: NOAA NCEI / British Geological Survey World Magnetic Model 2025 coefficients, model values, test vectors, and public-domain reference implementation/information.
+
+Public-map rules:
+- Cite: NOAA NCEI Geomagnetic Modeling Team; British Geological Survey. 2024: World Magnetic Model 2025. NOAA National Centers for Environmental Information. DOI: https://doi.org/10.25921/aqfd-sd83.
+- State model epoch/version and validity period; Map 27 uses WMM2025 and limits user dates to 2025-01-01 through 2029-12-31.
+- Preserve the notice that NOAA-produced U.S. Government material is not subject to U.S. copyright protection. NOAA states the WMM source code/information may be used freely by the public.
+- Validate custom implementations against NOAA's WMM2025 test values before release.
+- Clearly distinguish WMM modeled long-wavelength field values from local measurements. WMM does not represent all crustal, upper-mantle, ionospheric, magnetospheric, or nearby-object effects.
+- Apply WMM compass warnings using horizontal field H: H < 2,000 nT is the blackout/unreliable zone; 2,000 <= H < 6,000 nT is the caution zone.
+- Do not use NOAA, NCEI, BGS, NGA, or DGC logos as MitchellCo branding and do not imply endorsement.
+
 ### NOAA_NWS_API
 Status: **ALLOWED**
 
