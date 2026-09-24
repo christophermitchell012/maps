@@ -42,6 +42,15 @@ The repository currently contains the collection index plus Maps 00 through 27:
 
 ## Repository architecture
 
+Before publishing a new map, add its gallery row and commit the HTML and index.
+Then run `python3 scripts/build_sitemap.py` and commit the regenerated
+`sitemap.xml`. The script uses committed file dates so the sitemap reflects
+meaningful page edits. `python3 scripts/check_publication.py` checks gallery and
+sitemap coverage, canonical URLs, descriptions, same-origin links, and links
+between the map collection and the product blog. GitHub Actions runs that check
+on every push and pull request. If an external source rejects automated checks,
+review it in a browser before changing its citation.
+
 Numbered map HTML files live at the repository root as `NN-map-name.html`.
 
 Saved public-data snapshots and reusable geographic reference data live under `data/`. Maps should use same-origin relative paths such as `data/cdc-svi-2022-county.json`, `data/county-reference-2025-gazetteer-v1.json`, and `data/newspulse.json`.
