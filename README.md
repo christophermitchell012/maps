@@ -31,7 +31,7 @@ The repository currently contains the collection index plus Maps 00 through 27:
 - 18 National Weather Alert Impact
 - 19 Aurora & Geomagnetic Impact
 - 20 Earthquake Shaking Impact
-- 21 AirTrafficWatch: U.S. Airport Delay & NAS Impact
+- 21 Northern Hemisphere Snow & Ice Conditions
 - 22 MarineWatch: U.S. Coastal Marine Conditions
 - 23 VolcanoWatch: U.S. Volcano Alert & Aviation Impact
 - 24 Deep Time Under Your Feet
@@ -63,11 +63,15 @@ The planned series currently runs through Map 61. The next priority maps are:
 
 - 28 Global Aviation Weather & Airspace Conditions
 - 29 Global Landslide Hazard & Rainfall Trigger Watch
-- 30 Northern Hemisphere Snow & Ice Conditions
-- 31 Groundwater Level & Drought Stress
-- 32 River Ice Jam History & Current Conditions
+- 30 Groundwater Level & Drought Stress
+- 31 River Ice Jam History & Current Conditions
+- 32 Lightning Activity & Wildfire Ignition Potential
 
 Later roadmap topics cover river ice, lightning, severe weather, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis. BloomWatch has moved to Map 61 and remains deferred until a clearly redistributable flowering-observation source contract is available.
+
+## Map 21 source contract
+
+Northern Hemisphere Snow & Ice Conditions uses the U.S. National Ice Center Interactive Multisensor Snow and Ice Mapping System (IMS) published GIF charts directly from `https://usicecenter.gov/current/`. The browser computes the current UTC year/day-of-year filename for Northern Hemisphere, North America/USA, Alaska, or Asia/Europe and displays that official chart as an image. If the current UTC day's chart is not yet available, it tries up to five preceding days and clearly reports the displayed analysis date. The source image is not parsed, modified, recolored, proxied, or republished into the repository. There is no automatic polling; a user can manually refresh the source. IMS is a snow/ice presence analysis, not snow depth, snowfall forecast, road conditions, or ice thickness. DOI: https://doi.org/10.7265/N52R3PMC.
 
 ## Map 24 source contract
 

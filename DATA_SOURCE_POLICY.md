@@ -104,6 +104,21 @@ Public-map rules:
 - Browser runtime requests are permitted for Map 25 because the source contract is anonymous/keyless and the map limits fan-out to one position lookup plus two bounded navigation requests per interaction.
 - Do not use the USGS visual identifier/logo as MitchellCo branding.
 
+### USNIC_IMS_SNOW_ICE
+Status: **ALLOWED WITH ATTRIBUTION**
+
+Use: U.S. National Ice Center Interactive Multisensor Snow and Ice Mapping System (IMS) daily snow/ice charts.
+
+Public-map rules:
+- Credit the U.S. National Ice Center and identify IMS as the source.
+- Link to the official IMS product page and DOI https://doi.org/10.7265/N52R3PMC.
+- Display the official chart without removing or obscuring its source markings or annotations.
+- Do not use USNIC, NOAA, U.S. Navy, or U.S. Coast Guard seals/logos as MitchellCo branding and do not imply endorsement.
+- State the displayed analysis date. If a current-day chart is unavailable, a fallback chart must be labeled with its actual date.
+- Describe IMS as snow/ice presence analysis, not snow depth, snowfall forecast, road conditions, or ice thickness.
+- Direct browser image display is permitted for Map 21; no cross-origin data parsing is performed and no third-party proxy is used.
+- NOAA/NESDIS public-information policy treats U.S.-government web information as public domain unless specifically annotated otherwise and requests appropriate source credit. Re-check the source page if a chart is later marked with third-party copyright.
+
 ### NOAA_NCEI_WMM2025
 Status: **ALLOWED**
 
