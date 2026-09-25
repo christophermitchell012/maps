@@ -61,13 +61,13 @@ Static, slow-changing, rate-limited, or browser-incompatible source data should 
 
 The planned series currently runs through Map 61. The next priority maps are:
 
-- 28 Global Aviation Weather & Airspace Conditions
+- 28 Daylight Explorer | Where Is the Sun Right Now?
 - 29 Global Landslide Hazard & Rainfall Trigger Watch
 - 30 Groundwater Level & Drought Stress
 - 31 River Ice Jam History & Current Conditions
 - 32 Lightning Activity & Wildfire Ignition Potential
 
-Later roadmap topics cover river ice, lightning, severe weather, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis. BloomWatch has moved to Map 61 and remains deferred until a clearly redistributable flowering-observation source contract is available.
+Later roadmap topics cover river ice, lightning, severe weather, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis. Global Aviation Weather & Airspace Conditions is deferred until a browser-safe source or acceptable backend/build-time refresh architecture is available. BloomWatch has moved to Map 61 and remains deferred until a clearly redistributable flowering-observation source contract is available.
 
 ## Map 21 source contract
 
