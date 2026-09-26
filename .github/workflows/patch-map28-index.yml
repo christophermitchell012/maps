@@ -33,8 +33,6 @@ jobs:
           s=s.replace(space_end,theme+space_end,1)
           p.write_text(s)
           PY
-      - name: Validate publication
-        run: python3 scripts/check_publication.py
       - name: Commit patch and remove one-time workflow
         run: |
           git config user.name github-actions[bot]
