@@ -1,0 +1,3 @@
+Git-tree end-to-end transaction test.
+This is intentionally isolated from main and is not a real map publication.
+2026-09-26
