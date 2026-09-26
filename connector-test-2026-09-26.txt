@@ -1,3 +1,0 @@
-GitHub connector write test.
-Date: 2026-09-26
-This file can be deleted after verification.
