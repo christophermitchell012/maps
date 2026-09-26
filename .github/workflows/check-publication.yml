@@ -1,7 +1,28 @@
 name: Check map publication
+
 on:
   push:
+    branches: [main]
+    paths:
+      - "*.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "_config.yml"
+      - "scripts/check_publication.py"
+      - "scripts/build_sitemap.py"
   pull_request:
+    paths:
+      - "*.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "_config.yml"
+      - "scripts/check_publication.py"
+      - "scripts/build_sitemap.py"
+
+concurrency:
+  group: publication-check-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   check:
     runs-on: ubuntu-latest
