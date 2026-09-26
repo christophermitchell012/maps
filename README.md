@@ -8,7 +8,7 @@ Browse the collection at:
 
 https://christophermitchell012.github.io/maps/
 
-The repository currently contains the collection index plus Maps 00 through 27:
+The repository currently contains the collection index plus Maps 00 through 28:
 
 - 00 WildfireWatch
 - 01 Flash Flood & River Flood Risk
@@ -38,7 +38,7 @@ The repository currently contains the collection index plus Maps 00 through 27:
 - 25 Watershed Explorer | What's Upstream and Downstream?
 - 26 Dark Sky Tonight
 - 27 Your Compass Lies
-
+- 28 Daylight Explorer | Where Is the Sun Right Now?
 
 ## Repository architecture
 
@@ -61,7 +61,6 @@ Static, slow-changing, rate-limited, or browser-incompatible source data should 
 
 The planned series currently runs through Map 61. The next priority maps are:
 
-- 28 Daylight Explorer | Where Is the Sun Right Now?
 - 29 Global Landslide Hazard & Rainfall Trigger Watch
 - 30 Groundwater Level & Drought Stress
 - 31 River Ice Jam History & Current Conditions
