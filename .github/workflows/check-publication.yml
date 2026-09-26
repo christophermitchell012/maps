@@ -2,7 +2,7 @@ name: Check map publication
 
 on:
   push:
-    branches: [main]
+    branches: [main, 'release-*', 'git-tree-e2e-*']
     paths:
       - "*.html"
       - "sitemap.xml"
