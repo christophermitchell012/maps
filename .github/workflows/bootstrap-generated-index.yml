@@ -1,0 +1,22 @@
+name: Bootstrap generated map index
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  migrate:
+    if: startsWith(github.ref, 'refs/heads/release-')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/bootstrap_maps_json.py
+      - run: python3 scripts/migrate_index_markers.py
+      - run: python3 scripts/generate_index.py
+      - run: python3 scripts/check_publication.py
+      - run: |
+          git config user.name github-actions
+          git config user.email actions@github.com
+          git add index.html data/maps.json
+          git diff --cached --check
+          git commit -m 'Migrate map index to generated metadata' || exit 0
+          git push
