@@ -1,0 +1,14 @@
+{
+  "maps": [],
+  "themes": [
+    {"class":"fire","name":"Fire & smoke","maps":["00","03","07"]},
+    {"class":"weather","name":"Weather & severe hazards","maps":["02","04","06","18","21"]},
+    {"class":"water","name":"Water, flood & drought","maps":["01","08","10","12","16","22","25"]},
+    {"class":"earth","name":"Earth & deep time","maps":["13","14","20","23","24","27"]},
+    {"class":"infra","name":"Infrastructure","maps":["09","11"]},
+    {"class":"env","name":"Environment & agriculture","maps":["15","17"]},
+    {"class":"space","name":"Space & sky","maps":["19","26","28"]},
+    {"class":"news","name":"News & current events","maps":["05"]}
+  ],
+  "migration_note": "Run scripts/bootstrap_maps_json.py on the release branch to populate maps from the existing index before running scripts/generate_index.py."
+}
