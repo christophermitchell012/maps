@@ -1,0 +1,1 @@
+Release pipeline smoke test v2. No production map content.
