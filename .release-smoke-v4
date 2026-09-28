@@ -1,0 +1,3 @@
+Release pipeline smoke-test marker.
+Created 2026-09-28 to exercise the PR validation and main deployment pipeline.
+Safe to delete after the smoke test.
