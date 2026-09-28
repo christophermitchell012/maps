@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""Build the map sitemap from gallery links and source-page git history."""
+"""Build a deterministic map sitemap from the published gallery links."""
 
 import argparse
-import subprocess
 from html.parser import HTMLParser
 from pathlib import Path
 from xml.sax.saxutils import escape
@@ -22,21 +21,6 @@ class GalleryLinks(HTMLParser):
             self.maps.append(values["href"])
 
 
-def lastmod(path):
-    result = subprocess.check_output(
-        ["git", "log", "-1", "--format=%cs", "--", path], cwd=ROOT, text=True
-    ).strip()
-    if not result:
-        raise ValueError(f"No committed history for {path}")
-    return result
-
-
-def site_lastmod(maps):
-    """Use source map history, not generated index.html history, for the root URL."""
-    dates = [lastmod(name) for name in maps]
-    return max(dates) if dates else lastmod("data/maps.json")
-
-
 def build():
     parser = GalleryLinks()
     parser.feed((ROOT / "index.html").read_text())
@@ -44,12 +28,11 @@ def build():
     files = sorted(p.name for p in ROOT.glob("[0-9][0-9]-*.html"))
     if len(maps) != len(set(maps)) or sorted(maps) != files:
         raise ValueError("Gallery links and numbered map files differ")
-    entries = [(BASE, None)] + [(BASE + name, name) for name in maps]
+    urls = [BASE] + [BASE + name for name in maps]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for url, path in entries:
-        modified = site_lastmod(maps) if path is None else lastmod(path)
-        lines.append(f"  <url><loc>{escape(url)}</loc><lastmod>{modified}</lastmod></url>")
+    for url in urls:
+        lines.append(f"  <url><loc>{escape(url)}</loc></url>")
     lines.append("</urlset>")
     return "\n".join(lines) + "\n"
 
@@ -63,7 +46,7 @@ if __name__ == "__main__":
     if options.check:
         if destination.read_text() != output:
             raise SystemExit("sitemap.xml is stale; run python scripts/build_sitemap.py")
-        print("sitemap.xml matches the gallery and committed pages")
+        print("sitemap.xml matches the gallery and published pages")
     else:
         destination.write_text(output)
         print(f"Wrote {destination}")
