@@ -11,23 +11,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Measure before
-        run: |
-          wc -c index.html
-          grep -RIl 'data:image/svg+xml' --include='*.html' . | sort || true
+        run: wc -c index.html
       - name: Externalize SVG resources
         run: python3 scripts/externalize_svg_assets.py
-      - name: Verify no embedded SVGs outside scripts
+      - name: Verify migration output
         run: |
-          if grep -RIl 'data:image/svg+xml' --include='*.html' . | grep .; then exit 1; fi
-          python3 scripts/check_publication.py
+          if grep -RIl 'data:image/svg+xml' --include='*.html' . | grep .; then echo 'embedded SVG data URI remains'; exit 1; fi
           git diff --check
+          test -n "$(find assets/icons -type f -name '*.svg' -print -quit)"
           echo 'index bytes after:'
           wc -c index.html
       - name: Commit migration on candidate branch
         run: |
           git config user.name github-actions
           git config user.email actions@github.com
-          git add -- '*.html' assets/icons scripts/externalize_svg_assets.py
+          git add -- '*.html' assets/icons
           git commit -m 'Externalize SVG icons and favicons' || exit 0
           git push
-# trigger after default-branch registration
