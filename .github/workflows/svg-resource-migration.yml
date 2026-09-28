@@ -28,3 +28,4 @@ jobs:
           git add -- '*.html' assets/icons
           git commit -m 'Externalize SVG icons and favicons' || exit 0
           git push
+# contents-api retrigger
