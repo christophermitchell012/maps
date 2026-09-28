@@ -30,3 +30,4 @@ jobs:
           git add -- '*.html' assets/icons scripts/externalize_svg_assets.py
           git commit -m 'Externalize SVG icons and favicons' || exit 0
           git push
+# trigger after default-branch registration
