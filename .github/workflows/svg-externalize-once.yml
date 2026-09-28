@@ -1,0 +1,29 @@
+name: Externalize SVG resources once
+on:
+  push:
+    branches: [svg-externalize-clean]
+    paths: ['scripts/externalize_svg_resources.py', '.github/workflows/svg-externalize-once.yml', 'SVG-EXTERNALIZE-RUN']
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record before size
+        run: wc -c index.html
+      - name: Externalize SVG data URIs
+        run: python3 scripts/externalize_svg_resources.py
+      - name: Validate resource conversion
+        run: |
+          ! grep -RIl 'data:image/svg+xml' --include='*.html' .
+          test -n "$(find assets/icons -type f -name '*.svg' -print -quit)"
+          git diff --check
+          wc -c index.html
+      - name: Commit converted HTML and resources
+        run: |
+          git config user.name github-actions
+          git config user.email actions@github.com
+          git add -- '*.html' assets/icons
+          git commit -m 'Externalize embedded SVG icons and favicons'
+          git push
