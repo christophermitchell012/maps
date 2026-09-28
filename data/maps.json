@@ -1,0 +1,315 @@
+{
+  "maps": [
+    {
+      "id": "00",
+      "file": "00-wildfire-watch.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16%2027c-5%200-9-3.7-9-8.4%200-3.4%202.1-6.1%205.4-8.4-.2%202.7%201%204.3%202.5%205.2-.5-4.2%201.6-7.8%205.8-10.4.1%203.4%202.3%205.5%203.7%207.7%201.1%201.8%201.6%203.7%201.6%205.6%200%204.9-4.1%208.7-10%208.7Z' fill='none' stroke='%23ff8f32' stroke-width='2.2' stroke-linejoin='round'/%3E%3Ccircle cx='16' cy='22' r='2.4' fill='%23ffd45d'/%3E%3Cpath d='M26%207l1.2-2.3M28.6%209.6l2.2-.8M5.2%209.2L3%208.4' stroke='%23ffd45d' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E",
+      "name": "WildfireWatch",
+      "description": "Current wildfire incidents, perimeters and satellite hotspot detections.",
+      "tag": "Fire"
+    },
+    {
+      "id": "01",
+      "file": "01-flash-flood-river-flood-risk.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4%2020Q9%2014%2014%2020T24%2020T30%2020M6%2011h20' fill='none' stroke='%2354c8ff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Flash Flood & River Flood Risk",
+      "description": "Hydrologic hazards, exposure and community vulnerability context.",
+      "tag": "Water"
+    },
+    {
+      "id": "02",
+      "file": "02-extreme-heat-health-risk.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16%205v5m0%2012v5M5%2016h5m12%200h5M8%208l4%204m8%208%204%204M24%208l-4%204M12%2020l-4%204' fill='none' stroke='%23ff9b50' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Extreme Heat Health Risk",
+      "description": "Heat conditions, population exposure and vulnerability indicators.",
+      "tag": "Weather"
+    },
+    {
+      "id": "03",
+      "file": "03-wildfire-smoke-exposure.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M7%2023c-3-4%201-8%205-6-1-6%208-7%209-2%206%200%207%208%202%209H7Z' fill='none' stroke='%23b9c3ca' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Wildfire Smoke Exposure",
+      "description": "Fire and smoke conditions with population exposure context.",
+      "tag": "Fire"
+    },
+    {
+      "id": "04",
+      "file": "04-hurricane-storm-surge-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4%2018c4-8%209-9%2012-4%203-5%208-4%2012%203M6%2024h20' fill='none' stroke='%2366d9ff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Hurricane & Storm Surge Impact",
+      "description": "Tropical hazards, coastal exposure and vulnerability context.",
+      "tag": "Weather"
+    },
+    {
+      "id": "05",
+      "file": "05-breaking-news-geography.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6%207h20v16H6zM8%2010l8%206%208-6' fill='none' stroke='%23ffd45d' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Breaking News Geography",
+      "description": "Current events located with public news and geospatial data.",
+      "tag": "News"
+    },
+    {
+      "id": "06",
+      "file": "06-severe-storm-tornado-exposure.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16%204%2027%2025H5ZM16%2010v7m0%204v1' fill='none' stroke='%23ff5e57' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Severe Storm & Tornado Exposure",
+      "description": "Severe weather hazards with population and vulnerability context.",
+      "tag": "Weather"
+    },
+    {
+      "id": "07",
+      "file": "07-wildfire-evacuation-risk.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M7%2025c-2-7%205-9%204-16%206%203%209%208%206%2013%203-2%204-5%203-8%207%206%205%2012-1%2013Z' fill='none' stroke='%23ff9b50' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Wildfire Evacuation Risk",
+      "description": "Active fire, evacuation, exposure and vulnerability context.",
+      "tag": "Fire"
+    },
+    {
+      "id": "08",
+      "file": "08-drought-water-supply-stress.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5%2018c5-5%208%204%2013-1s7-1%209%201M7%2023h18M9%209h14' fill='none' stroke='%23d7b45b' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Drought & Water Supply Stress",
+      "description": "Drought conditions and water-supply stress.",
+      "tag": "Water"
+    },
+    {
+      "id": "09",
+      "file": "09-power-grid-stress-extreme-weather.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16%204%207%2017h7l-3%2011%2014-16h-8l4-8Z' fill='none' stroke='%23ffd45d' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Power Grid Stress & Extreme Weather",
+      "description": "Severe conditions and infrastructure exposure.",
+      "tag": "Infrastructure"
+    },
+    {
+      "id": "10",
+      "file": "10-drinking-water-quality-risk.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M9%205h14v22H9zM12%2010h8m-8%205h8m-8%205h5' fill='none' stroke='%2366d9ff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Drinking Water Quality Risk",
+      "description": "Public water-system indicators and population exposure.",
+      "tag": "Water"
+    },
+    {
+      "id": "11",
+      "file": "11-internet-outage-watch.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6%2021c4-7%207-7%2010%200s6%207%2010%200M8%2012c3-5%205-5%208%200s5%205%208%200' fill='none' stroke='%2378e6a0' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Internet Outage Watch",
+      "description": "Connectivity disruptions and geographic service-impact patterns.",
+      "tag": "Infrastructure"
+    },
+    {
+      "id": "12",
+      "file": "12-coastal-flooding-high-tide-risk.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4%2020c5-5%208%203%2012-2s8-2%2012%201M6%2025h20M16%206v7' fill='none' stroke='%2366d9ff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Coastal Flooding & High Tide Risk",
+      "description": "Tidal conditions and coastal exposure.",
+      "tag": "Water"
+    },
+    {
+      "id": "13",
+      "file": "13-earthquake-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2%2018h7l3-8%204%2015%204-11%203%204h7' fill='none' stroke='%23ffb45c' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Earthquake Impact",
+      "description": "Recent seismic activity and exposure indicators.",
+      "tag": "Earth"
+    },
+    {
+      "id": "14",
+      "file": "14-fema-disaster-declarations-community-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16%204%2027%209v8c0%207-5%2010-11%2012C10%2027%205%2024%205%2017V9Z' fill='none' stroke='%23ff5e57' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "FEMA Disaster Declarations",
+      "description": "Recent federal declarations with community context.",
+      "tag": "Hazards"
+    },
+    {
+      "id": "15",
+      "file": "15-general-air-quality-health-risk.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6%2021c3-7%207-9%2010-4s7%202%2010-4M7%2025h18M10%209h12' fill='none' stroke='%2378e6a0' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Air Quality Health Risk",
+      "description": "Pollution conditions and population exposure.",
+      "tag": "Environment"
+    },
+    {
+      "id": "16",
+      "file": "16-reservoir-water-shortage-monitor.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6%2023h20M9%2023V10h14v13M12%2014h8m-8%204h8' fill='none' stroke='%2366d9ff' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Reservoir Water Shortage Monitor",
+      "description": "Storage trends and drought conditions.",
+      "tag": "Water"
+    },
+    {
+      "id": "17",
+      "file": "17-agricultural-drought-farm-exposure.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 27V8M16 15c-5-1-8-4-9-8 5 0 8 2 9 6M16 20c5-1 8-4 9-8-5 0-8 2-9 6' fill='none' stroke='%23ffd05a' stroke-width='2.6' stroke-linecap='round'/%3E%3Cpath d='M6 27h20' stroke='%23ff974d' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E",
+      "name": "Agricultural Drought & Farm Exposure",
+      "description": "Drought conditions and agricultural exposure.",
+      "tag": "Environment"
+    },
+    {
+      "id": "18",
+      "file": "18-national-weather-alert-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16%205%2028%2026H4ZM16%2011v8m0%203v1' fill='none' stroke='%23ffd05a' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "National Weather Alert Impact",
+      "description": "Current U.S. weather alerts and geographic exposure.",
+      "tag": "Weather"
+    },
+    {
+      "id": "19",
+      "file": "19-aurora-geomagnetic-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3%2024Q8%206%2013%2022T22%209T29%2023' fill='none' stroke='%2378e6a0' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Aurora & Geomagnetic Impact",
+      "description": "Space-weather conditions and aurora probability.",
+      "tag": "Space"
+    },
+    {
+      "id": "20",
+      "file": "20-earthquake-shaking-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M2%2018h7l3-8%204%2015%204-11%203%204h7' fill='none' stroke='%23ffb45c' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
+      "name": "Earthquake Shaking Impact",
+      "description": "Recent earthquakes, felt reports and instrumental intensity.",
+      "tag": "Earth"
+    },
+    {
+      "id": "21",
+      "file": "21-northern-hemisphere-snow-ice-conditions.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 4v24M7.5 9l17 14M24.5 9l-17 14M10 6l6 5 6-5M10 26l6-5 6 5' fill='none' stroke='%2372d5ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M5 23c3-2 5-2 8 0s5 2 8 0 4-1 6 0' fill='none' stroke='%23ffd45d' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E",
+      "name": "Northern Hemisphere Snow & Ice Conditions",
+      "description": "Current USNIC IMS snow and ice charts loaded directly from the daily authoritative source.",
+      "tag": "Weather"
+    },
+    {
+      "id": "22",
+      "file": "22-marine-conditions-coastal-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M3 20q5-6 10 0t10 0t7 0M3 25q5-6 10 0t10 0t7 0' fill='none' stroke='%2372d5ff' stroke-width='2.4'/%3E%3Cpath d='M16 5v10m-4-6h8' stroke='%23ffd45d' stroke-width='2.2'/%3E%3C/svg%3E",
+      "name": "MarineWatch",
+      "description": "U.S. coastal wave, wind and water-temperature conditions.",
+      "tag": "Water"
+    },
+    {
+      "id": "23",
+      "file": "23-volcano-alert-aviation-impact.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 27L13 10l4 6 3-4 8 15z' fill='none' stroke='%23ff9b50' stroke-width='2.4' stroke-linejoin='round'/%3E%3Cpath d='M13 9c-2-3 2-3 0-6m5 8c3-3-1-4 1-7' fill='none' stroke='%239cacb5' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E",
+      "name": "VolcanoWatch",
+      "description": "U.S. volcano alert levels and aviation color codes.",
+      "tag": "Earth"
+    },
+    {
+      "id": "24",
+      "file": "24-deep-time-under-your-feet.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M4 23c5-8 8 5 13-3s7-2 11-8v12H4z' fill='%23b58a58'/%3E%3Cpath d='M4 18c6-6 9 5 14-2s7-2 10-6' fill='none' stroke='%2372d5ff' stroke-width='2'/%3E%3Ccircle cx='10' cy='9' r='3' fill='none' stroke='%23ffd45d' stroke-width='2'/%3E%3C/svg%3E",
+      "name": "Deep Time Under Your Feet",
+      "description": "Click anywhere to inspect mapped surface geology and reconstruct that location through deep geologic time.",
+      "tag": "Earth"
+    },
+    {
+      "id": "25",
+      "file": "25-watershed-explorer.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M5 6c5 3 8 6 11 10M27 6c-5 3-8 6-11 10M16 4v24' fill='none' stroke='%2372d5ff' stroke-width='2.4' stroke-linecap='round'/%3E%3Cpath d='M8 25c3-2 5-2 8 0s5 2 8 0' fill='none' stroke='%2378e6a0' stroke-width='2' stroke-linecap='round'/%3E%3Ccircle cx='16' cy='16' r='2.5' fill='%23ffd45d'/%3E%3C/svg%3E",
+      "name": "Watershed Explorer",
+      "description": "Click a location to trace connected NHDPlusV2 flowlines upstream and downstream.",
+      "tag": "Water"
+    },
+    {
+      "id": "26",
+      "file": "26-dark-sky-tonight.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M20 4a11 11 0 1 0 8 18A12 12 0 0 1 20 4Z' fill='none' stroke='%23d9d2ff' stroke-width='2.2'/%3E%3Cpath d='M7 7v5M4.5 9.5h5M25 7v4M23 9h4' stroke='%23ffd45d' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E",
+      "name": "Dark Sky Tonight",
+      "description": "Nighttime lights, Moon illumination and NWS cloud-cover context.",
+      "tag": "Space"
+    },
+    {
+      "id": "27",
+      "file": "27-your-compass-lies.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='none' stroke='%239cacb5' stroke-width='1.6'/%3E%3Cpath d='M16 4l-3 12 3-2 3 2z' fill='%2372d5ff'/%3E%3Cpath d='M16 28l3-12-3 2-3-2z' fill='%23ff7187'/%3E%3Cpath d='M16 16L23 7' fill='none' stroke='%23ffd45d' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M23 7l-1 5-3-3z' fill='%23ffd45d'/%3E%3C/svg%3E",
+      "name": "Your Compass Lies",
+      "description": "Compare true north with WMM2025 magnetic north, declination, dip and annual drift anywhere on Earth.",
+      "tag": "Earth"
+    },
+    {
+      "id": "28",
+      "file": "28-daylight-explorer.html",
+      "icon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='6' fill='none' stroke='%23ffd45d' stroke-width='2.4'/%3E%3Cpath d='M16 2v5M16 25v5M2 16h5M25 16h5M6.1 6.1l3.5 3.5M22.4 22.4l3.5 3.5M25.9 6.1l-3.5 3.5M9.6 22.4l-3.5 3.5' fill='none' stroke='%23ffd45d' stroke-width='2' stroke-linecap='round'/%3E%3Cpath d='M4 23c6-4 18-4 24 0' fill='none' stroke='%2372d5ff' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E",
+      "name": "Daylight Explorer",
+      "description": "Explore the subsolar point, day/night terminator, sunrise, sunset, twilight and solar geometry anywhere on Earth.",
+      "tag": "Space"
+    }
+  ],
+  "themes": [
+    {
+      "class": "fire",
+      "name": "Fire & smoke",
+      "maps": [
+        "00",
+        "03",
+        "07"
+      ]
+    },
+    {
+      "class": "weather",
+      "name": "Weather & severe hazards",
+      "maps": [
+        "02",
+        "04",
+        "06",
+        "18",
+        "21"
+      ]
+    },
+    {
+      "class": "water",
+      "name": "Water, flood & drought",
+      "maps": [
+        "01",
+        "08",
+        "10",
+        "12",
+        "16",
+        "22",
+        "25"
+      ]
+    },
+    {
+      "class": "earth",
+      "name": "Earth & deep time",
+      "maps": [
+        "13",
+        "14",
+        "20",
+        "23",
+        "24",
+        "27"
+      ]
+    },
+    {
+      "class": "infra",
+      "name": "Infrastructure",
+      "maps": [
+        "09",
+        "11"
+      ]
+    },
+    {
+      "class": "env",
+      "name": "Environment & agriculture",
+      "maps": [
+        "15",
+        "17"
+      ]
+    },
+    {
+      "class": "space",
+      "name": "Space & sky",
+      "maps": [
+        "19",
+        "26",
+        "28"
+      ]
+    },
+    {
+      "class": "news",
+      "name": "News & current events",
+      "maps": [
+        "05"
+      ]
+    }
+  ]
+}
