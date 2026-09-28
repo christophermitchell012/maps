@@ -40,3 +40,4 @@ for rel, raw in assets.items():
     if '<rect width="100%"' in raw or "<rect width='100%'" in raw:
         raise SystemExit(f'possible opaque full-canvas background in {rel}')
 print(f'changed_html={changed} unique_svg_assets={len(assets)}')
+# isolated migration trigger
