@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the map sitemap from gallery links and the last meaningful git edit."""
+"""Build the map sitemap from gallery links and source-page git history."""
 
 import argparse
 import subprocess
@@ -31,6 +31,12 @@ def lastmod(path):
     return result
 
 
+def site_lastmod(maps):
+    """Use source map history, not generated index.html history, for the root URL."""
+    dates = [lastmod(name) for name in maps]
+    return max(dates) if dates else lastmod("data/maps.json")
+
+
 def build():
     parser = GalleryLinks()
     parser.feed((ROOT / "index.html").read_text())
@@ -38,11 +44,12 @@ def build():
     files = sorted(p.name for p in ROOT.glob("[0-9][0-9]-*.html"))
     if len(maps) != len(set(maps)) or sorted(maps) != files:
         raise ValueError("Gallery links and numbered map files differ")
-    entries = [(BASE, "index.html")] + [(BASE + name, name) for name in maps]
+    entries = [(BASE, None)] + [(BASE + name, name) for name in maps]
     lines = ['<?xml version="1.0" encoding="UTF-8"?>',
              '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for url, path in entries:
-        lines.append(f"  <url><loc>{escape(url)}</loc><lastmod>{lastmod(path)}</lastmod></url>")
+        modified = site_lastmod(maps) if path is None else lastmod(path)
+        lines.append(f"  <url><loc>{escape(url)}</loc><lastmod>{modified}</lastmod></url>")
     lines.append("</urlset>")
     return "\n".join(lines) + "\n"
 
