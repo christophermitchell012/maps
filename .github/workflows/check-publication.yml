@@ -2,16 +2,14 @@ name: Check map publication
 
 on:
   push:
-    branches: [main, 'release-*', 'git-tree-e2e-*']
+    branches: [main]
     paths:
       - "*.html"
-      - "data/maps.json"
       - "sitemap.xml"
       - "robots.txt"
       - "_config.yml"
       - "scripts/check_publication.py"
       - "scripts/build_sitemap.py"
-      - "scripts/generate_index.py"
       - ".github/workflows/check-publication.yml"
   pull_request:
 
