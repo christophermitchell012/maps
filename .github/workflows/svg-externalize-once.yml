@@ -27,3 +27,4 @@ jobs:
           git add -- '*.html' assets/icons
           git commit -m 'Externalize embedded SVG icons and favicons'
           git push
+# corrected converter retrigger
