@@ -1,14 +1,12 @@
 # MitchellCo Interactive Data Maps
 
-Interactive, standalone public-data maps for weather, wildfire, earthquakes, drought, floods, geology, infrastructure, environment, public risk, space weather, aviation, marine conditions, volcanoes, astronomy context, and current events.
+Interactive, standalone public-data maps for weather, wildfire, earthquakes, drought, floods, geology, infrastructure, environment, public risk, space weather, marine conditions, astronomy context, and current events.
 
 ## Published collection
 
-Browse the collection at:
+Browse: https://christophermitchell012.github.io/maps/
 
-https://christophermitchell012.github.io/maps/
-
-The repository currently contains the collection index plus Maps 00 through 29:
+The repository contains Maps 00 through 30:
 
 - 00 WildfireWatch
 - 01 Flash Flood & River Flood Risk
@@ -24,89 +22,67 @@ The repository currently contains the collection index plus Maps 00 through 29:
 - 11 Internet Outage Watch
 - 12 Coastal Flooding & High Tide Risk
 - 13 Earthquake Impact
-- 14 FEMA Disaster Declarations & Community Impact
-- 15 General Air Quality Health Risk
+- 14 FEMA Disaster Declarations
+- 15 Air Quality Health Risk
 - 16 Reservoir Water Shortage Monitor
 - 17 Agricultural Drought & Farm Exposure
 - 18 National Weather Alert Impact
 - 19 Aurora & Geomagnetic Impact
 - 20 Earthquake Shaking Impact
 - 21 Northern Hemisphere Snow & Ice Conditions
-- 22 MarineWatch: U.S. Coastal Marine Conditions
-- 23 VolcanoWatch: U.S. Volcano Alert & Aviation Impact
+- 22 MarineWatch
+- 23 VolcanoWatch
 - 24 Deep Time Under Your Feet
-- 25 Watershed Explorer | What's Upstream and Downstream?
+- 25 Watershed Explorer
 - 26 Dark Sky Tonight
 - 27 Your Compass Lies
-- 28 Daylight Explorer | Where Is the Sun Right Now?
+- 28 Daylight Explorer
 - 29 Groundwater Level & Drought Stress
+- 30 River Ice Jam History & Current Conditions
 
 ## Repository architecture
 
-Before publishing a new map, update its gallery row, map HTML, sitemap, README and source/license notes as one complete publication state. `python3 scripts/check_publication.py` checks gallery and sitemap coverage, canonical URLs, descriptions, same-origin links, and links between the map collection and the product blog. GitHub Actions runs that check read-only on publication-relevant pushes and pull requests.
+Numbered maps live at the repository root as `NN-map-name.html`. Saved snapshots and reusable reference data live under `data/`. Topic identity SVGs live under `assets/icons/` and are linked as resources rather than embedded in HTML.
 
-Numbered map HTML files live at the repository root as `NN-map-name.html`.
+Publication is intentionally simple: prepare the complete map/data/index/sitemap/docs state, run `python3 scripts/check_publication.py`, commit the coherent tree, then let the read-only publication Action validate it and GitHub Pages deploy the exact committed tree. Actions do not generate, commit, or push repository content.
 
-Saved public-data snapshots and reusable geographic reference data live under `data/`. Maps should use same-origin relative paths such as `data/cdc-svi-2022-county.json`, `data/county-reference-2025-gazetteer-v1.json`, and `data/newspulse.json`.
-
-Static, slow-changing, rate-limited, or browser-incompatible source data should be acquired and normalized at build time whenever practical, committed under `data/`, and loaded with relative same-origin paths. Runtime cross-origin requests should be reserved for sources with a clear anonymous/keyless browser-access contract and safe client fan-out. Do not use `daily-maps/` for new numbered maps.
+Static, slow-changing, rate-limited, or browser-incompatible source data should be acquired and normalized at build time. Runtime cross-origin requests are reserved for authoritative anonymous/keyless browser-CORS sources with safe client fan-out.
 
 ## Current roadmap
 
-The planned numbered series currently runs through Map 61. The next priority maps are:
-
-- 30 River Ice Jam History & Current Conditions
+Next candidates:
 - 31 Lightning Activity & Wildfire Ignition Potential
 - 32 Tornado Climatology & Current Severe Weather Context
 - 33 Hail Exposure & Crop/Property Risk
+- 34 High Wind & Infrastructure Exposure
 
-Later roadmap topics cover severe weather, drought, marine heatwaves, ports, dams, water stress, crop conditions, transportation, environmental exposure, infrastructure and multi-hazard synthesis. Global Aviation Weather & Airspace Conditions remains deferred until a browser-safe source or acceptable backend/build-time refresh architecture is available. BloomWatch remains deferred at the end of the numbered series until a clearly redistributable flowering-observation source contract is available. Global Landslide Hazard & Rainfall Trigger Watch has been moved to the bottom of the backlog because the preferred NASA LHASA anonymous download path is currently unreliable and the archive path conflicts with the zero-auth publication rule.
+Global Landslide Hazard & Rainfall Trigger Watch is at the bottom of the unnumbered backlog until a stable anonymous/keyless NASA LHASA path passes the source gate. Global Aviation Weather remains deferred. BloomWatch remains deferred until observation-record licensing/redistribution is clearly compatible with commercial/public reuse.
 
-## Map 21 source contract
+## Recent source contracts
 
-Northern Hemisphere Snow & Ice Conditions uses the U.S. National Ice Center Interactive Multisensor Snow and Ice Mapping System (IMS) published GIF charts directly from `https://usicecenter.gov/current/`. The browser computes the current UTC year/day-of-year filename for Northern Hemisphere, North America/USA, Alaska, or Asia/Europe and displays that official chart as an image. If the current UTC day's chart is not yet available, it tries up to five preceding days and clearly reports the displayed analysis date. The source image is not parsed, modified, recolored, proxied, or republished into the repository. There is no automatic polling; a user can manually refresh the source. IMS is a snow/ice presence analysis, not snow depth, snowfall forecast, road conditions, or ice thickness. DOI: https://doi.org/10.7265/N52R3PMC.
+- **Map 21:** U.S. National Ice Center IMS daily chart images, displayed directly; no snow-depth or ice-thickness claim.
+- **Map 24:** Macrostrat surface geology plus EarthByte/GPlates reconstruction context.
+- **Map 25:** USGS NLDI connected-flowline navigation with bounded distance.
+- **Map 26:** NASA VIIRS Black Marble reference radiance, NOAA/NWS cloud forecast, and derived Sun/Moon context. Its build tooling may use the user-authorized `EARTHDATA_TOKEN`; the token is never published.
+- **Map 27:** NOAA/BGS WMM2025 coefficients and official test vectors loaded same-origin.
+- **Map 28:** Client-side solar geometry with no runtime weather claims.
+- **Map 29:** USGS Water Data OGC `latest-continuous`, parameter 72019, loaded only on explicit user action; raw groundwater depth is not converted into a drought score.
+- **Map 30:** USACE CRREL Ice Jam Database. The map uses a dated same-origin factual subset of the anonymous Water Year 2026 report. It is not a forecast, live closure feed, or exhaustive copy. See `data/map30-source-license.md`.
 
-## Map 24 source contract
+## Site/search files
 
-Deep Time Under Your Feet uses Macrostrat's public geologic map tiles and point-query API for mapped surface geology, with source definitions used for original-provider attribution when available. Macrostrat data and tiles are CC BY 4.0. Plate reconstruction uses the EarthByte GPlates Web Service. The map supports MERDITH2021 and MULLER2022 through 1,000 Ma and ZAHIROVIC2022 through 410 Ma, subject to the model's own coverage. Invalid reconstructed coordinates are rejected. Surface geology is explicitly not presented as subsurface geology at foundation, aquifer, tunnel or well depth.
-
-## Map 25 source contract
-
-Watershed Explorer uses the current USGS Network Linked Data Index at `api.water.usgs.gov/nldi/linked-data`. A click uses the `comid/position` endpoint to resolve a NHDPlusV2 network location, then requests an explicit-distance upstream trace (all tributaries or mainstem) and downstream mainstem flowlines. The default is 25 km; 10, 50 and 100 km are user-selectable, and unconstrained navigation is never requested. Responses are GeoJSON and repeated requests are cached only in the browser session. USGS-authored data and information are public domain in the United States and are credited to the U.S. Geological Survey. The map presents network connectivity only, not contaminant travel time, discharge, flood forecasting or proof of current flow.
-
-## Map 26 source contract
-
-Dark Sky Tonight uses NASA GIBS VIIRS Black Marble annual nighttime imagery at 2016-01-01 as a historical proxy for upward-emitted/artificial light, not direct sky brightness. NASA Earthdata states NASA-led mission data are generally CC0 unless specifically restricted and requests source acknowledgment. Current cloud context uses the anonymous NOAA/NWS `api.weather.gov` point and forecast-grid services for U.S. locations; NWS information is public domain unless specifically noted otherwise. Moon illumination and phase are calculated client-side from the current date. The displayed viewing rating is explicitly MitchellCo-derived from cloud cover and Moon illumination only, while artificial light remains a visual context layer rather than a falsely precise score.
-
-## Map 27 source contract
-
-Your Compass Lies uses the NOAA NCEI / British Geological Survey World Magnetic Model 2025 (WMM2025), degree and order 12. The exact coefficient file is committed at `data/WMM2025.COF` (pinned SHA-256 `06791cd95faba7bdf4a709808f2715a53fe689b29c23b9886bc2196fa9b3eb13`) and is loaded same-origin; no magnetic-model API is called at runtime. A normalized subset of NOAA's official WMM2025 test vectors is committed at `data/wmm2025-test-values.json`; the browser verifies six vectors before enabling calculations. Values are evaluated at 0 km height above the WGS84 ellipsoid. Declination is `atan2(Y,X)`, inclination is `atan2(Z,H)`, `H=sqrt(X²+Y²)`, and `F=sqrt(H²+Z²)`; secular variation comes from WMM2025's published annual coefficient changes. NOAA's surface declination uncertainty formula `sqrt(0.26² + (5417/H)²)` degrees is displayed. The map marks WMM caution areas where 2,000 ≤ H < 6,000 nT and blackout/unreliable areas where H < 2,000 nT. It explicitly warns that WMM omits local crustal and external-field anomalies and nearby magnetic interference.
-
-## Map 29 source contract
-
-Groundwater Level & Drought Stress uses the USGS modern Water Data OGC API `latest-continuous` collection for parameter 72019, depth to water below land surface. Runtime requests are anonymous/keyless and only occur after an explicit user action at zoom level 5 or closer. The client caps each request at 500 records and enforces a 60-second cooldown; it does not poll or fetch automatically on map movement. USGS data are U.S. public domain. Raw depth-to-water values are displayed as measurements, not converted into a drought severity score, because drought interpretation requires each well's historical context. See `data/map29-source-license.md`.
-
-## Site and search files
-
-- `index.html` is the crawlable collection directory and should list every numbered map.
-- `sitemap.xml` contains the index and every published numbered map.
-- `robots.txt` points crawlers to the sitemap.
-- `_config.yml` defines GitHub Pages metadata and the `/maps` base URL.
-- `site.webmanifest` identifies the collection as MitchellCo Interactive Data Maps.
-- `404.html` returns visitors to the collection index.
-- `data/` contains saved public-data snapshots and supporting geographic data.
+`index.html` is the crawlable collection directory. `sitemap.xml` lists the index and every numbered map. `robots.txt` points to the sitemap. `_config.yml` defines the `/maps` base URL. `scripts/check_publication.py` is the read-only integrity checker and `scripts/build_sitemap.py` deterministically builds the sitemap.
 
 ## Design goals
 
 - Browser-first standalone HTML where practical
-- Authoritative or explicitly approved public data sources
-- Same-origin local snapshots for static/slow/rate-limited data
-- No API keys, access credentials, or account-based runtime authentication
-- No prohibited proprietary GIS platform dependencies
-- Clear attribution and source links
-- Consistent GA4 analytics using `G-8SVEH8WD1R`
-- GitHub Pages friendly
-- SEO metadata, canonical URLs, and crawlable internal links
+- Authoritative or explicitly approved public sources
+- Same-origin snapshots for static/slow/rate-limited data
+- No credentials in public runtime code
+- Zero prohibited proprietary GIS platform dependencies
+- Clear attribution and source semantics
+- GA4 `G-8SVEH8WD1R`
+- GitHub Pages friendly and crawlable
 
 ## License
 
