@@ -39,6 +39,7 @@ The repository contains Maps 00 through 30:
 - 28 Daylight Explorer
 - 29 Groundwater Level & Drought Stress
 - 30 River Ice Jam History & Current Conditions
+- 31 Tornado Climatology & Current Severe Weather Context
 
 ## Repository architecture
 
@@ -68,6 +69,7 @@ Global Landslide Hazard & Rainfall Trigger Watch is at the bottom of the unnumbe
 - **Map 28:** Client-side solar geometry with no runtime weather claims.
 - **Map 29:** USGS Water Data OGC `latest-continuous`, parameter 72019, loaded only on explicit user action; raw groundwater depth is not converted into a drought score.
 - **Map 30:** USACE CRREL Ice Jam Database. The map uses a dated same-origin factual subset of the anonymous Water Year 2026 report. It is not a forecast, live closure feed, or exhaustive copy. See `data/map30-source-license.md`.
+- **Map 31:** NOAA SPC `1950-2025_actual_tornadoes.csv`, stored as a dated same-origin snapshot (`scripts/map31_build_snapshot.py` rebuilds it). Historical counts are 1-degree start-point counts with no forecast or risk score. A live layer requests active NWS tornado alerts from `api.weather.gov` in the visitor's browser and degrades to a status message if it fails. See `data/map31-source-license.md`.
 
 ## Site/search files
 
