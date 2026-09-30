@@ -1,4 +1,4 @@
-name: Check map publication
+name: Check legacy map redirects
 
 on:
   push:
@@ -31,4 +31,18 @@ jobs:
       - name: Validate gallery, sitemap, metadata, and local links
         run: python3 scripts/check_publication.py
       - name: Verify validation did not modify the checkout
+        run: git diff --exit-code
+
+  deployed-redirects:
+    if: github.event_name == 'push'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify deployed legacy redirects
+        run: python3 scripts/check_deployment.py
+      - name: Verify checks did not modify the checkout
         run: git diff --exit-code
